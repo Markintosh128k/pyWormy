@@ -5,4 +5,4 @@
 * Fabrizio Ciotola (@FabrizioCiotola)
 * Gianmarco Davini (@Markintosh128k)
 
-# SVILUPPATO PER IL PON "ROBOTICA EDUCATIVA"
+# SVILUPPATO PER IL PON "ROBOTICA EDUCATIVA".
