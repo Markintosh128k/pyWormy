@@ -156,15 +156,6 @@ class Mela:
         self.screen.blit(self.img, (self.x, self.y))
         #pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
 
-
-
-#BUONE IDEE PROGETTUALI PER DOPO
-"""    class MelaSpeciale(Mele):
-        
-        def __init__(self):
-
-            Mele.__init__()"""
-
 class Sfondo:
     def __init__(self, image_file, location):
         self.image = pygame.image.load(image_file)
