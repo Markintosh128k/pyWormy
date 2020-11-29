@@ -14,9 +14,13 @@ class Verme:
         self.testaDx = "sprites/sprite_serpente/testa/testa2.png"
         self.testaSx = "sprites/sprite_serpente/testa/testa4.png"
 
+        # Caricamento dello sprite della testa
         self.imgTesta = pygame.image.load(self.testaSu)
 
-        #self.imgTesta = pygame.image.load(self.imgTestaList[0])
+        #Lunghezza
+        #self.vermeLenght = 1
+        '''self.vermeList = []
+        self.vermeList.append(self.imgTesta)'''
 
         # posizioni x ed y del serpente
         self.x = 240
@@ -86,13 +90,17 @@ class Verme:
     # Procedura che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
         if self.x == mx and self.y == my:
+            #self.vermeLenght += 1
+            '''self.vermeList.append(self.imgTesta)
+            print(self.vermeList)'''
             self.mangiato = True
         else:
             self.mangiato = False
 
     # Disegna il serpente
     def disegnaTesta(self):
-        self.screen.blit(self.imgTesta, (self.x, self.y))
+        for img in self.vermeList:
+            self.screen.blit(self.imgTesta, (self.x, self.y))
 
 
 #Classe mela

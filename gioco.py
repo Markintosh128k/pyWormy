@@ -54,7 +54,7 @@ def main():
         screen.fill(WHITE)
         screen.blit(sfondo, (0, 0))
         mele.disegna()
-        disegnaGriglia(screen)
+        #disegnaGriglia(screen)
         verme.disegnaTesta()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
