@@ -4,12 +4,22 @@ import os
 
 #Classe del serpente
 class Verme:
-    #ciao
     #Costruttore
     def __init__(self, screen):
         self.screen = screen
-        img_verme = pygame.image.load("Wormy/sprite_serpente/testa_su_dx.png")
-        self.img = pygame.image.load(img_verme)
+
+        # Caricamento immagini testa
+        dir_img = os.path.dirname(__file__)
+        self.imgTestaList= []
+        for img in range(8):
+            relPath = "sprites/sprite_serpente/testa/"
+            for filename in os.listdir(relPath):
+                if filename.endswith(".png"):
+                    self.imgTestaList.append(filename)
+                print(filename)
+        # 0 giu dx, 1 giu sx, 2 dx dx, 3 dx sx
+        # 4 su dx, 5 su sx, 6 sx dx, 7 sx dx
+        #self.imgTesta = pygame.image.load(self.imgTestaList[0])
 
         # posizioni x ed y del serpente
         self.x = 240
@@ -25,6 +35,8 @@ class Verme:
 
         # mangiato = True se ha mangiato la mela, mangiato = False se non ha ancora mangiato la mela
         self.mangiato = False
+
+
 
     # Restituisce il valore della x del serpente
     def getX(self):
@@ -46,22 +58,26 @@ class Verme:
             self.change_y = 20
             self.change_x = 0
             #tests giu
+            self.imgTesta = pygame.image.load(self.imgTestaList[0])
 
         elif key[pygame.K_UP]:
             self.change_y = -20
             self.change_x = 0
             #testa su
+            self.imgTesta = pygame.image.load(self.imgTestaList[4])
 
 
         if key[pygame.K_RIGHT]:
             self.change_x = 20
             self.change_y = 0
             #testa dx
+            self.imgTesta = pygame.image.load(self.imgTestaList[2])
 
         elif key[pygame.K_LEFT]:
             self.change_x = -20
             self.change_y = 0
             #testa sx
+            self.imgTesta = pygame.image.load(self.imgTestaList[6])
 
         return self.change_x, self.change_y
 
@@ -78,9 +94,9 @@ class Verme:
             self.mangiato = False
 
     # Disegna il serpente
-    def disegna(self):
-        self.screen.blit(self.img, (self.x, self.y))
-
+    """def disegnaTesta(self):
+        self.screen.blit(self.imgTesta, (self.x, self.y))
+"""
 #Classe mela
 class Mela:
 
@@ -89,8 +105,9 @@ class Mela:
         self.screen = screen
 
         # prende l'immagine della mela dalla cartella
-        base_path = os.path.dirname(__file__)
-        mela = os.path.join(base_path, "meloide.png")
+        dir = os.path.dirname(__file__)
+        dirMela = "sprites/meloide.png"
+        mela = os.path.join(dir, dirMela)
         self.img = pygame.image.load(mela)
 
         # grandezza della cella della mela
@@ -149,3 +166,9 @@ class Mela:
         def __init__(self):
 
             Mele.__init__()"""
+
+class Sfondo:
+    def __init__(self, image_file, location):
+        self.image = pygame.image.load(image_file)
+        self.rect = self.image.get_rect()
+        self.rect.left, self.rect.top = location

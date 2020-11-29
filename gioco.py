@@ -51,7 +51,7 @@ def main():
         screen.fill(WHITE)
         mele.disegna()
         #disegnaGriglia(screen) 
-        verme.disegna()
+        #verme.disegnaTesta()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
