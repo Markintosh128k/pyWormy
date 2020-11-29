@@ -68,10 +68,10 @@ def startGame(screen):
 #Procedura per diegnare la griglia
 def disegnaGriglia(screen):
     for x in range(0, WIN_WIDTH, CELL_SIZE):
-        pygame.draw.line(screen, WHITE, (x, 0), (x, WIN_HEIGHT), 1)
+        pygame.draw.line(screen, BLACK, (x, 0), (x, WIN_HEIGHT), 1)
 
     for y in range(0, WIN_HEIGHT, CELL_SIZE):
-        pygame.draw.line(screen, WHITE, (0, y), (WIN_WIDTH, y), 1)
+        pygame.draw.line(screen, BLACK, (0, y), (WIN_WIDTH, y), 1)
 
 #Funzione che controlla se il serpente è uscito fuori dai bordi
 def controlloBordi(x, y):

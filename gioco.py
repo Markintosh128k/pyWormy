@@ -50,8 +50,8 @@ def main():
     while not gameover:
         screen.fill(WHITE)
         mele.disegna()
-        #disegnaGriglia(screen) 
-        #verme.disegnaTesta()
+        disegnaGriglia(screen) 
+        verme.disegnaTesta()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

@@ -9,16 +9,13 @@ class Verme:
         self.screen = screen
 
         # Caricamento immagini testa
-        dir_img = os.path.dirname(__file__)
-        self.imgTestaList= []
-        for img in range(8):
-            relPath = "sprites/sprite_serpente/testa/"
-            for filename in os.listdir(relPath):
-                if filename.endswith(".png"):
-                    self.imgTestaList.append(filename)
-                print(filename)
-        # 0 giu dx, 1 giu sx, 2 dx dx, 3 dx sx
-        # 4 su dx, 5 su sx, 6 sx dx, 7 sx dx
+        self.testaGiu = "sprites/sprite_serpente/testa/testa1.png"
+        self.testaSu = "sprites/sprite_serpente/testa/testa3.png"
+        self.testaDx = "sprites/sprite_serpente/testa/testa2.png"
+        self.testaSx = "sprites/sprite_serpente/testa/testa4.png"
+
+        self.imgTesta = pygame.image.load(self.testaSu)
+
         #self.imgTesta = pygame.image.load(self.imgTestaList[0])
 
         # posizioni x ed y del serpente
@@ -58,26 +55,26 @@ class Verme:
             self.change_y = 20
             self.change_x = 0
             #tests giu
-            self.imgTesta = pygame.image.load(self.imgTestaList[0])
+            self.imgTesta = pygame.image.load(self.testaGiu)
 
         elif key[pygame.K_UP]:
             self.change_y = -20
             self.change_x = 0
             #testa su
-            self.imgTesta = pygame.image.load(self.imgTestaList[4])
+            self.imgTesta = pygame.image.load(self.testaSu)
 
 
         if key[pygame.K_RIGHT]:
             self.change_x = 20
             self.change_y = 0
             #testa dx
-            self.imgTesta = pygame.image.load(self.imgTestaList[2])
+            self.imgTesta = pygame.image.load(self.testaDx)
 
         elif key[pygame.K_LEFT]:
             self.change_x = -20
             self.change_y = 0
             #testa sx
-            self.imgTesta = pygame.image.load(self.imgTestaList[6])
+            self.imgTesta = pygame.image.load(self.testaSx)
 
         return self.change_x, self.change_y
 
@@ -94,9 +91,10 @@ class Verme:
             self.mangiato = False
 
     # Disegna il serpente
-    """def disegnaTesta(self):
+    def disegnaTesta(self):
         self.screen.blit(self.imgTesta, (self.x, self.y))
-"""
+
+
 #Classe mela
 class Mela:
 
