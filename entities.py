@@ -8,10 +8,7 @@ class Verme:
     #Costruttore
     def __init__(self, screen):
         self.screen = screen
-"""RISOLVERE STO BORDELLO percorso relativo img serpente"""
-        file_path = "/"
-        base_path = os.path.dirname(__file__)
-        img_verme = os.path.join(base_path, "\\sprite_serpente\\testa_su_dx.png")
+        img_verme = pygame.image.load("Wormy/sprite_serpente/testa_su_dx.png")
         self.img = pygame.image.load(img_verme)
 
         # posizioni x ed y del serpente

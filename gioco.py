@@ -1,7 +1,7 @@
 import pygame
 import sys
 from entities import *
-from startGame import *
+from general import *
 
 # Colori utili
 WHITE = (255, 255, 255)
