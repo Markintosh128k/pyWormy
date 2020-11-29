@@ -4,7 +4,7 @@ import os
 
 #Classe del serpente
 class Verme:
-
+    #ciao
     #Costruttore
     def __init__(self, screen):
         self.screen = screen
