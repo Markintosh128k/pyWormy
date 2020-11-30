@@ -11,22 +11,19 @@ class Verme:
         # Caricamento immagini
         if selzioneImg == 0:
             #0 sopra, 1 destra, 2 giu, 3 sinistra
-            self.img = ["sprites/sprite_serpente/testa/testaSopra.png", "sprites/sprite_serpente/testa/testaDestra.png", "sprites/sprite_serpente/testa/testaGiu.png", "sprites/sprite_serpente/testa/testaSinistra.png"]
-        else:
-            self.img = ["sprites/sprite_serpente/corpo.png"]
-
+            self.img = ["Sprites/Sprites2/TestaSopra.png", "Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
+        elif selzioneImg == 1:
+            self.img = ["Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png", "Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png"]
+        elif selzioneImg == 2:
+            self.img = ["Sprites/Sprites2/CodaSopra.png", "Sprites/Sprites2/CodaDestra.png", "Sprites/Sprites2/CodaGiu.png", "Sprites/Sprites2/CodaSinistra.png"]
 
         # Caricamento dello sprite
-        self.imgLoad = pygame.image.load(self.img[0])
+        self.imgLoad = pygame.image.load(self.img[1])
         self.rectImg = self.imgLoad.get_rect()
 
         # posizioni x ed y del serpente
         self.rectImg.x = x
         self.rectImg.y = y
-
-        # direzioni x e y del serpente
-        self.change_x = 0
-        self.change_y = 0
 
         # grandezza della cella del seprente
         self.height = 20
@@ -44,6 +41,9 @@ class Verme:
     # Restituisce il valore della y del serpente
     def getY(self):
         return self.rectImg.y
+    # Restituisce la posizione
+    def getPosizione(self):
+        return self.rectImg
 
     # Restituise il booleno, True se il serpente ha mangiato la mela, False se il serpente non ha mangiato la mela
     def isMangiato(self):
@@ -51,118 +51,95 @@ class Verme:
 
     # Funzione per cambaire direzione
     def spostamenti(self):
+        change_x = 0
+        change_y = 0
         key = pygame.key.get_pressed()
 
         if key[pygame.K_DOWN]:
-            self.change_y = 20
-            self.change_x = 0
+            change_y = 20
+            change_x = 0
             #tests giu
             self.imgLoad = pygame.image.load(self.img[2])
 
         elif key[pygame.K_UP]:
-            self.change_y = -20
-            self.change_x = 0
+            change_y = -20
+            change_x = 0
             #testa su
             self.imgLoad = pygame.image.load(self.img[0])
 
 
         if key[pygame.K_RIGHT]:
-            self.change_x = 20
-            self.change_y = 0
+            change_x = 20
+            change_y = 0
             #testa dx
             self.imgLoad = pygame.image.load(self.img[1])
 
         elif key[pygame.K_LEFT]:
-            self.change_x = -20
-            self.change_y = 0
+            change_x = -20
+            change_y = 0
             #testa sx
             self.imgLoad = pygame.image.load(self.img[3])
 
-        return self.change_x, self.change_y
+        self.rectImg.x += change_x
+        self.rectImg.y += change_y
 
-    # Procedura per muovere in avanti il serprente
-    def muovi(self, x, y):
-        self.rectImg.x += x
-        self.rectImg.y += y
+
 
     # Procedura che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
         if self.rectImg.x == mx and self.rectImg.y == my:
-            #self.vermeLenght += 1
-            '''self.vermeList.append(self.imgTesta)
-            print(self.vermeList)'''
             self.mangiato = True
         else:
             self.mangiato = False
 
     # Disegna il serpente
     def disegnaTesta(self):
-        self.screen.blit(self.imgLoad, (self.rectImg.x, self.rectImg.y))
-
+        self.screen.blit(self.imgLoad, self.rectImg)
 
 #Classe mela
 class Mela:
 
     # Costruttore
-    def __init__(self, screen):
+    def __init__(self, screen, pixel):
         self.screen = screen
+        self.size = pixel
 
         # prende l'immagine della mela dalla cartella
         dir = os.path.dirname(__file__)
-        dirMela = "sprites/meloide.png"
+        dirMela = "Sprites/Sprites1/meloide.png"
         mela = os.path.join(dir, dirMela)
-        self.img = pygame.image.load(mela)
+
+        #Caricamento dello sprite
+        self.imgLoad = pygame.image.load(mela)
+        self.rectImg = self.imgLoad.get_rect()
 
         # grandezza della cella della mela
         self.height = 20
         self.width = 20
 
-        # posizioni x ed y della mela
-        self.x = self.spawnX()
-        self.y = self.spawnY()
-
-    # Setta il valore della x
-    def setX(self, x):
-        self.x = x
-
-    # Setta il valore della y
-    def setY(self, y):
-        self.y = y
+        self.spawn()
 
     # Restituisce il valore della x
     def getX(self):
-        return self.x
+        return self.rectImg.x
 
     # Restituisce il valore della y
     def getY(self):
-        return self.y
+        return self.rectImg.y
 
     # Funzione che restituisce la x in una posizione random
-    def spawnX(self):   
+    def spawn(self):
+        n = 0
         finito = False
         while not finito:
-            self.x = random.randint(40, 460)
-            if self.x % 20 == 0:
-                finito = True
-        return self.x
-
-    # Funzione che restituisce la y in una posizione random
-    def spawnY(self):
-        finito = False
-        while not finito:
-            self.y = random.randint(40, 460)
-            if self.y % 20 == 0:
+            n = random.randint(40, 460)
+            if n % self.size == 0:
                 finito = True
 
-        return self.y
+        self.rectImg.x = n
+        self.rectImg.y = n
 
     # Disegna la mela
     def disegna(self):
-        self.screen.blit(self.img, (self.x, self.y))
+        self.screen.blit(self.imgLoad, self.rectImg)
         #pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
-
-class Sfondo:
-    def __init__(self, image_file, location):
-        self.image = pygame.image.load(image_file)
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location

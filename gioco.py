@@ -29,21 +29,17 @@ def main():
     startGame(screen)
 
     #Creazione dell'oggetto verme
-    verme = [Verme(screen, 240, 240, 1), Verme(screen, 220, 220), Verme(screen, 200, 200)]
+    verme = [Verme(screen, 240, 240, 0), Verme(screen, 220, 240, 1), Verme(screen, 200, 240, 2)]
     
     #Inizializzazione della variabile di GameOver
     gameover = False
     
     #Creazione dell'oggetto mele
-    mele = Mela(screen)
+    mele = Mela(screen, CELL_SIZE)
     
     #Inizializzazione del punteggio
     punteggio = 0
 
-    
-    #Generazione casuale delle mele sulla mappa
-    mele.setX(mele.spawnX())
-    mele.setY(mele.spawnY())
 
     # Sfondo
     sfondo = pygame.image.load("background.png")
@@ -61,16 +57,14 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        x, y = verme[0].spostamenti()
-        verme[0].muovi(x, y)
+        verme[0].spostamenti()
         gameover = controlloBordi(verme[0].getX(), verme[0].getY())
         verme[0].mangiaMele(mele.getX(), mele.getY())
        
         mangiato = verme[0].isMangiato()
         if mangiato == True:
             print("UA MEGLIO DI MAGMA")
-            mele.setX(mele.spawnX())
-            mele.setY(mele.spawnY())
+            mele.spawn()
             punteggio += 1
             FPS += 1
 
