@@ -29,7 +29,7 @@ def main():
     startGame(screen)
 
     #Creazione dell'oggetto verme
-    verme = Verme(screen)
+    verme = [Verme(screen, 240, 240, 1), Verme(screen, 220, 220), Verme(screen, 200, 200)]
     
     #Inizializzazione della variabile di GameOver
     gameover = False
@@ -48,25 +48,25 @@ def main():
     # Sfondo
     sfondo = pygame.image.load("background.png")
 
-    x = verme.getX()
-    y = verme.getY()
+    x = verme[0].getX()
+    y = verme[0].getY()
     while not gameover:
         screen.fill(WHITE)
         screen.blit(sfondo, (0, 0))
         mele.disegna()
         #disegnaGriglia(screen)
-        verme.disegnaTesta()
+        verme[0].disegnaTesta()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-        x, y = verme.spostamenti()
-        verme.muovi(x, y)
-        gameover = controlloBordi(verme.getX(), verme.getY()) 
-        verme.mangiaMele(mele.getX(), mele.getY())
+        x, y = verme[0].spostamenti()
+        verme[0].muovi(x, y)
+        gameover = controlloBordi(verme[0].getX(), verme[0].getY())
+        verme[0].mangiaMele(mele.getX(), mele.getY())
        
-        mangiato = verme.isMangiato()
+        mangiato = verme[0].isMangiato()
         if mangiato == True:
             print("UA MEGLIO DI MAGMA")
             mele.setX(mele.spawnX())
