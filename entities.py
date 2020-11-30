@@ -5,25 +5,26 @@ import os
 #Classe del serpente
 class Verme:
     #Costruttore
-    def __init__(self, screen, x, y, selzioneImg=0):
+    def __init__(self, screen):
         self.screen = screen
 
-        # Caricamento immagini
-        if selzioneImg == 0:
-            #0 sopra, 1 destra, 2 giu, 3 sinistra
-            self.img = ["Sprites/Sprites2/TestaSopra.png", "Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
-        elif selzioneImg == 1:
-            self.img = ["Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png", "Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png"]
-        elif selzioneImg == 2:
-            self.img = ["Sprites/Sprites2/CodaSopra.png", "Sprites/Sprites2/CodaDestra.png", "Sprites/Sprites2/CodaGiu.png", "Sprites/Sprites2/CodaSinistra.png"]
+        # Caricamento immagini testa
+        self.testaGiu = "Sprites/Sprites2/TestaGiu.png"
+        self.testaSu = "Sprites/Sprites2/TestaSopra.png"
+        self.testaDx = "Sprites/Sprites2/TestaDestra.png"
+        self.testaSx = "Sprites/Sprites2/TestaSinistra.png"
 
-        # Caricamento dello sprite
-        self.imgLoad = pygame.image.load(self.img[1])
-        self.rectImg = self.imgLoad.get_rect()
+        self.imgTesta = pygame.image.load(self.testaSu)
+
+        #self.imgTesta = pygame.image.load(self.imgTestaList[0])
 
         # posizioni x ed y del serpente
-        self.rectImg.x = x
-        self.rectImg.y = y
+        self.x = 240
+        self.y = 240
+
+        # direzioni x e y del serpente
+        self.change_x = 0
+        self.change_y = 0
 
         # grandezza della cella del seprente
         self.height = 20
@@ -36,14 +37,11 @@ class Verme:
 
     # Restituisce il valore della x del serpente
     def getX(self):
-        return self.rectImg.x
+        return self.x
 
     # Restituisce il valore della y del serpente
     def getY(self):
-        return self.rectImg.y
-    # Restituisce la posizione
-    def getPosizione(self):
-        return self.rectImg
+        return self.y
 
     # Restituise il booleno, True se il serpente ha mangiato la mela, False se il serpente non ha mangiato la mela
     def isMangiato(self):
@@ -51,50 +49,50 @@ class Verme:
 
     # Funzione per cambaire direzione
     def spostamenti(self):
-        change_x = 0
-        change_y = 0
         key = pygame.key.get_pressed()
 
         if key[pygame.K_DOWN]:
-            change_y = 20
-            change_x = 0
+            self.change_y = 20
+            self.change_x = 0
             #tests giu
-            self.imgLoad = pygame.image.load(self.img[2])
+            self.imgTesta = pygame.image.load(self.testaGiu)
 
         elif key[pygame.K_UP]:
-            change_y = -20
-            change_x = 0
+            self.change_y = -20
+            self.change_x = 0
             #testa su
-            self.imgLoad = pygame.image.load(self.img[0])
+            self.imgTesta = pygame.image.load(self.testaSu)
 
 
         if key[pygame.K_RIGHT]:
-            change_x = 20
-            change_y = 0
+            self.change_x = 20
+            self.change_y = 0
             #testa dx
-            self.imgLoad = pygame.image.load(self.img[1])
+            self.imgTesta = pygame.image.load(self.testaDx)
 
         elif key[pygame.K_LEFT]:
-            change_x = -20
-            change_y = 0
+            self.change_x = -20
+            self.change_y = 0
             #testa sx
-            self.imgLoad = pygame.image.load(self.img[3])
+            self.imgTesta = pygame.image.load(self.testaSx)
 
-        self.rectImg.x += change_x
-        self.rectImg.y += change_y
+        return self.change_x, self.change_y
 
-
+    # Procedura per muovere in avanti il serprente
+    def muovi(self, x, y):
+        self.x += x
+        self.y += y
 
     # Procedura che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
-        if self.rectImg.x == mx and self.rectImg.y == my:
+        if self.x == mx and self.y == my:
             self.mangiato = True
         else:
             self.mangiato = False
 
     # Disegna il serpente
     def disegnaTesta(self):
-        self.screen.blit(self.imgLoad, self.rectImg)
+        self.screen.blit(self.imgTesta, (self.x, self.y))
 
 #Classe mela
 class Mela:
@@ -118,6 +116,14 @@ class Mela:
         self.width = 20
 
         self.spawn()
+
+    # Setta il valore della x
+    def setX(self, x):
+        self.x = x
+
+    # Setta il valore della y
+    def setY(self, y):
+        self.y = y
 
     # Restituisce il valore della x
     def getX(self):
