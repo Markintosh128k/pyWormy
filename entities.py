@@ -22,9 +22,6 @@ class Verme:
         self.x = 240
         self.y = 240
 
-        # direzione del verme
-        self.direzione = "destra"
-
         # direzioni x e y del vermi
         self.change_x = 20
         self.change_y = 0
@@ -58,120 +55,30 @@ class Verme:
 
         return finito
 
-    '''
-    def caricaImg(self, old_x, old_y):
-        for block in range(len(self.vermeImg)):
-            img = self.vermeImg[block]
-            x = self.vermeCord[block][0]
-            y = self.vermeCord[block][1]
-
-            # verso destra
-            if self.x + self.change_x > self.x:
-                if block == 0:
-                    #coda
-                    img = self.codaList[1]
-                elif block == len(self.vermeImg) - 1:
-                    #testa
-                    img = self.testaList[1]
-                else:
-                    #corpo
-                    img = self.codaList[1]
-
-            # verso sinistra
-            elif self.x + self.change_x < self.x:
-                if block == 0:
-                    #coda
-                    img = self.codaList[3]
-                elif block == len(self.vermeImg) - 1:
-                    #testa
-                    img = self.testaList[3]
-                else:
-                    #corpo
-                    img = self.codaList[3]
-
-            # verso sotto
-            elif self.y + self.change_y > self.y:
-                if block == 0:
-                    #coda
-                    img = self.codaList[2]
-                elif block == len(self.vermeImg) - 1:
-                    #testa
-                    img = self.testaList[2]
-                else:
-                    #corpo
-                    img = self.codaList[2]
-
-            # verso sopra
-            elif self.y + self.change_y < self.y:
-                if block == 0:
-                    #coda
-                    img = self.codaList[0]
-                elif block == len(self.vermeImg) - 1:
-                    #testa
-                    img = self.testaList[0]
-                else:
-                    #corpo
-                    img = self.codaList[0]
-
-            self.vermeImg[block] = img
-        '''
-
-
     # Funzione per cambaire direzione
     def muovi(self):
         key = pygame.key.get_pressed()
 
-        if key[pygame.K_DOWN] and self.direzione != "up":
+        if key[pygame.K_DOWN]:
             self.change_y = self.size
             self.change_x = 0
-            self.direzione = "down" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #tests giu
 
-        elif key[pygame.K_UP] and self.direzione != "down":
+        elif key[pygame.K_UP] :
             self.change_y = -self.size
             self.change_x = 0
-            self.direzione = "up" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa su
 
-        if key[pygame.K_RIGHT] and self.direzione != "sinistra":
+        if key[pygame.K_RIGHT]:
             self.change_x = self.size
             self.change_y = 0
-            self.direzione = "destra" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa dx
 
-        elif key[pygame.K_LEFT] and self.direzione != "destra":
+        elif key[pygame.K_LEFT]:
             self.change_x = -self.size
             self.change_y = 0
-            self.direzione = "sinistra" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa sx
 
-        '''
-        self.imgTesta = self.vermeImg[-1]
-        x = self.vermeCord[-1][0]
-        y = self.vermeCord[-1][1]
-
-        # verso destra
-        if self.x + self.change_x > self.x:
-            #testa
-            self.imgTesta = self.testaList[1]
-
-        # verso sinistra
-        elif self.x + self.change_x < self.x:
-            self.imgTesta = self.testaList[3]
-
-        # verso sotto
-        elif self.y + self.change_y > self.y:
-            self.imgTesta = self.testaList[2]
-
-        # verso sopra
-        elif self.y + self.change_y < self.y:
-            self.imgTesta = self.testaList[0]
-
-        self.vermeImg.append(self.imgTesta)
-        self.vermeImg.pop(0)
-        self.vermeImg[0] = self.imgCoda
-        self.vermeImg[1] = self.imgCorpo
-        '''
         self.x += self.change_x
         self.y += self.change_y
 
