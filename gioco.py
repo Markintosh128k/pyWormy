@@ -56,7 +56,7 @@ def main():
             gameover = verme.checkEatItSelf()
 
         print(verme.checkEatItSelf())
-        
+
         if verme.mangiaMele(mele.getX(), mele.getY()):
             print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
