@@ -60,7 +60,10 @@ def main():
             print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
             punteggio += 1
-            FPS += 1
+            if FPS == 30:
+                pass
+            else:
+                FPS += 10
 
         pygame.display.update()
         frames_per_secondo.tick(FPS)
