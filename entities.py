@@ -8,8 +8,8 @@ class Verme:
     def __init__(self, screen, pixel):
         self.screen = screen
         # Caricamento immagini testa
-        #0 sopra, 1 destra, 2 giu, 3 sinistra
 
+        #0 sopra, 1 destra, 2 giu, 3 sinistra
         self.testaList = ["Sprites/Sprites2/TestaSopra.png","Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
         self.corpoList = ["Sprites/Sprites2/CorpoVerticale.png","Sprites/Sprites2/CorpoOrizzontale.png", "Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png"]
         self.codaList = ["Sprites/Sprites2/CodaSopra.png","Sprites/Sprites2/CodaDestra.png", "Sprites/Sprites2/CodaGiu.png", "Sprites/Sprites2/CodaSinistra.png"]
@@ -32,8 +32,8 @@ class Verme:
         # mangiato = True se ha mangiato la mela, mangiato = False se non ha ancora mangiato la mela
         self.mangiato = False
 
-        self.vermeImg = [self.imgTesta, self.imgCorpo, self.imgCoda]
-        self.vermeCord = [(self.x, self.y), (self.x - 20, self.y), (self.x - 40, self.y)]
+        self.vermeImg = [self.imgCoda, self.imgCorpo, self.imgTesta]
+        self.vermeCord = [(self.x - 40, self.y), (self.x - 20, self.y), (self.x, self.y),]
 
     # Restituisce il valore posizione del serpente
     def getPosizione(self):
@@ -54,6 +54,65 @@ class Verme:
             finito = True
 
         return finito
+
+    '''
+    def caricaImg(self, old_x, old_y):
+        for block in range(len(self.vermeImg)):
+            img = self.vermeImg[block]
+            x = self.vermeCord[block][0]
+            y = self.vermeCord[block][1]
+
+            # verso destra
+            if self.x + self.change_x > self.x:
+                if block == 0:
+                    #coda
+                    img = self.codaList[1]
+                elif block == len(self.vermeImg) - 1:
+                    #testa
+                    img = self.testaList[1]
+                else:
+                    #corpo
+                    img = self.codaList[1]
+
+            # verso sinistra
+            elif self.x + self.change_x < self.x:
+                if block == 0:
+                    #coda
+                    img = self.codaList[3]
+                elif block == len(self.vermeImg) - 1:
+                    #testa
+                    img = self.testaList[3]
+                else:
+                    #corpo
+                    img = self.codaList[3]
+
+            # verso sotto
+            elif self.y + self.change_y > self.y:
+                if block == 0:
+                    #coda
+                    img = self.codaList[2]
+                elif block == len(self.vermeImg) - 1:
+                    #testa
+                    img = self.testaList[2]
+                else:
+                    #corpo
+                    img = self.codaList[2]
+
+            # verso sopra
+            elif self.y + self.change_y < self.y:
+                if block == 0:
+                    #coda
+                    img = self.codaList[0]
+                elif block == len(self.vermeImg) - 1:
+                    #testa
+                    img = self.testaList[0]
+                else:
+                    #corpo
+                    img = self.codaList[0]
+
+            self.vermeImg[block] = img
+        '''
+
 
     # Funzione per cambaire direzione
     def muovi(self):
@@ -79,8 +138,38 @@ class Verme:
             self.change_y = 0
             #testa sx
 
-        self.vermeCord.append((self.x + self.change_x, self.y + self.change_y))
-        self.vermeCord.pop(-1)
+
+        self.imgTesta = self.vermeImg[-1]
+        x = self.vermeCord[-1][0]
+        y = self.vermeCord[-1][1]
+
+        # verso destra
+        if self.x + self.change_x > self.x:
+            #testa
+            self.imgTesta = self.testaList[1]
+
+        # verso sinistra
+        elif self.x + self.change_x < self.x:
+            self.imgTesta = self.testaList[3]
+
+        # verso sotto
+        elif self.y + self.change_y > self.y:
+            self.imgTesta = self.testaList[2]
+
+        # verso sopra
+        elif self.y + self.change_y < self.y:
+            self.imgTesta = self.testaList[0]
+
+        self.vermeImg[-1] = self.imgTesta
+
+        self.x += self.change_x
+        self.y += self.change_y
+
+        self.vermeCord.append((self.x, self.y))
+        self.vermeCord.pop(0)
+
+
+
 
     # Funzione che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
