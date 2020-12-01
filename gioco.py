@@ -28,60 +28,48 @@ def main():
     pygame.display.set_caption("Wormy")
     startGame(screen)
 
-    # Creazione dell'oggetto verme
+    # Oggetti
     verme = Verme(screen)
+    mele = Mela(screen, CELL_SIZE)
 
-    # Inizializzazione della variabile di GameOver
+
+    # Inizializzazione varibili utili
     gameover = False
-
-    # Creazione dell'oggetto mele
-    mele = Mela(screen ,CELL_SIZE)
-
-    # Inizializzazione del punteggio
-    punteggio = 0
-
-    # Generazione casuale delle mele sulla mappa
-    mele.setX(mele.spawn())
-    mele.setY(mele.spawn())
-
-    # Sfondo
     sfondo = pygame.image.load("background.png")
-
+    punteggio = 0
+    mele.spawn()
     x = verme.getX()
     y = verme.getY()
+
+
     while not gameover:
         screen.fill(WHITE)
         #screen.blit(sfondo, (0, 0))
-        mele.disegna()
         # disegnaGriglia(screen)
-        verme.disegnaTesta()
+        mele.disegna()
+        verme.disegna()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-        x, y = verme.spostamenti()
-        verme.muovi(x, y)
+        verme.muovi()
         gameover = controlloBordi(verme.getX(), verme.getY())
-        verme.mangiaMele(mele.getX(), mele.getY())
 
-        mangiato = verme.isMangiato()
-        if mangiato == True:
-            print("UA MEGLIO DI MAGMA")
-            mele.setX(mele.spawn())
-            mele.setY(mele.spawn())
+        if verme.mangiaMele(mele.getX(), mele.getY()):
+            print("MELA MELINDAAA FANTASTICAAA!")
+            mele.spawn()
             punteggio += 1
             FPS += 1
 
         pygame.display.update()
         frames_per_secondo.tick(FPS)
 
-    fineGioco = messaggioGameOver(screen, punteggio)
-    return fineGioco
-
+    return messaggioGameOver(screen, punteggio)
 
 if __name__ == "__main__":
     finito = False
     while not finito:
         finito = main()
+
     sys.exit()

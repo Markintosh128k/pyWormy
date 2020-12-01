@@ -9,20 +9,15 @@ class Verme:
         self.screen = screen
 
         # Caricamento immagini testa
-        self.testaGiu = "Sprites/Sprites2/TestaGiu.png"
-        self.testaSu = "Sprites/Sprites2/TestaSopra.png"
-        self.testaDx = "Sprites/Sprites2/TestaDestra.png"
-        self.testaSx = "Sprites/Sprites2/TestaSinistra.png"
+        #0 sopra, 1 destra, 2 giu, 3 sinistra
+        self.testaList = ["Sprites/Sprites2/TestaSopra.png","Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
+        self.imgTesta = pygame.image.load(self.testaList[0])
 
-        self.imgTesta = pygame.image.load(self.testaSu)
-
-        #self.imgTesta = pygame.image.load(self.imgTestaList[0])
-
-        # posizioni x ed y del serpente
+        # posizioni x ed y attuali del verme
         self.x = 240
         self.y = 240
 
-        # direzioni x e y del serpente
+        # direzioni x e y del vermi
         self.change_x = 0
         self.change_y = 0
 
@@ -34,7 +29,6 @@ class Verme:
         self.mangiato = False
 
 
-
     # Restituisce il valore della x del serpente
     def getX(self):
         return self.x
@@ -43,45 +37,37 @@ class Verme:
     def getY(self):
         return self.y
 
-    # Restituise il booleno, True se il serpente ha mangiato la mela, False se il serpente non ha mangiato la mela
-    def isMangiato(self):
-        return self.mangiato
-
     # Funzione per cambaire direzione
-    def spostamenti(self):
+    def muovi(self):
         key = pygame.key.get_pressed()
 
         if key[pygame.K_DOWN]:
             self.change_y = 20
             self.change_x = 0
             #tests giu
-            self.imgTesta = pygame.image.load(self.testaGiu)
+            self.imgTesta = pygame.image.load(self.testaList[2])
 
         elif key[pygame.K_UP]:
             self.change_y = -20
             self.change_x = 0
             #testa su
-            self.imgTesta = pygame.image.load(self.testaSu)
+            self.imgTesta = pygame.image.load(self.testaList[0])
 
 
         if key[pygame.K_RIGHT]:
             self.change_x = 20
             self.change_y = 0
             #testa dx
-            self.imgTesta = pygame.image.load(self.testaDx)
+            self.imgTesta = pygame.image.load(self.testaList[1])
 
         elif key[pygame.K_LEFT]:
             self.change_x = -20
             self.change_y = 0
             #testa sx
-            self.imgTesta = pygame.image.load(self.testaSx)
+            self.imgTesta = pygame.image.load(self.testaList[3])
 
-        return self.change_x, self.change_y
-
-    # Procedura per muovere in avanti il serprente
-    def muovi(self, x, y):
-        self.x += x
-        self.y += y
+        self.x += self.change_x
+        self.y += self.change_y
 
     # Procedura che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
@@ -90,8 +76,10 @@ class Verme:
         else:
             self.mangiato = False
 
+        return self.mangiato
+
     # Disegna il serpente
-    def disegnaTesta(self):
+    def disegna(self):
         self.screen.blit(self.imgTesta, (self.x, self.y))
 
 #Classe mela
@@ -109,29 +97,23 @@ class Mela:
 
         #Caricamento dello sprite
         self.imgLoad = pygame.image.load(mela)
-        self.rectImg = self.imgLoad.get_rect()
 
         # grandezza della cella della mela
         self.height = 20
         self.width = 20
 
-        self.spawn()
+        #posizioni x e y attuali della mela
+        self.x = 0
+        self.y = 0
 
-    # Setta il valore della x
-    def setX(self, x):
-        self.x = x
-
-    # Setta il valore della y
-    def setY(self, y):
-        self.y = y
 
     # Restituisce il valore della x
     def getX(self):
-        return self.rectImg.x
+        return self.x
 
     # Restituisce il valore della y
     def getY(self):
-        return self.rectImg.y
+        return self.y
 
     # Funzione che restituisce la x in una posizione random
     def spawn(self):
@@ -142,10 +124,10 @@ class Mela:
             if n % self.size == 0:
                 finito = True
 
-        self.rectImg.x = n
-        self.rectImg.y = n
+        self.x = n
+        self.y = n
 
     # Disegna la mela
     def disegna(self):
-        self.screen.blit(self.imgLoad, self.rectImg)
+        self.screen.blit(self.imgLoad, (self.x, self.y))
         #pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.height, self.width])
