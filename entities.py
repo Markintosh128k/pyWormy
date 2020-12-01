@@ -56,36 +56,33 @@ class Verme:
         return finito
 
     # Funzione per cambaire direzione
-    def muovi(self):
-        key = pygame.key.get_pressed()
+    def muoviDown(self):
+        self.change_x = 0
+        self.change_y = self.size
 
-        if key[pygame.K_DOWN]:
-            self.change_y = self.size
-            self.change_x = 0
-            #tests giu
+    # Funzione per cambaire direzione
+    def muoviUp(self):
+        self.change_x = 0
+        self.change_y = - self.size
 
-        elif key[pygame.K_UP] :
-            self.change_y = -self.size
-            self.change_x = 0
-            #testa su
+    # Funzione per cambaire direzione
+    def muoviRight(self):
+        self.change_x = self.size
+        self.change_y = 0
 
-        if key[pygame.K_RIGHT]:
-            self.change_x = self.size
-            self.change_y = 0
-            #testa dx
+    # Funzione per cambaire direzione
+    def muoviLeft(self):
+        self.change_x = - self.size
+        self.change_y = 0
 
-        elif key[pygame.K_LEFT]:
-            self.change_x = -self.size
-            self.change_y = 0
-            #testa sx
-
-        self.x += self.change_x
-        self.y += self.change_y
-
+    def popAppend(self):
         self.vermeCord.append((self.x, self.y))
         self.vermeCord.pop(0)
-        #print(self.vermeCord)
 
+
+    def muovi(self):
+        self.x += self.change_x
+        self.y += self.change_y
     # Funzione che controlla se il serpente ha mangiato se stesso
     def checkEatItSelf(self):
         finto = False
