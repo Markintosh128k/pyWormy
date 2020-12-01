@@ -49,8 +49,19 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    verme.muoviUp()
+                elif event.key == pygame.K_DOWN:
+                    verme.muoviDown()
+                elif event.key == pygame.K_RIGHT:
+                    verme.muoviRight()
+                elif event.key == pygame.K_LEFT:
+                    verme.muoviLeft()
         verme.muovi()
+        verme.popAppend()
+
+
         gameover = verme.controlloBordi()
         if not gameover:
             gameover = verme.checkEatItSelf()
