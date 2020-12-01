@@ -21,7 +21,7 @@ def main():
 
     # Velocita' del serpente (in frame per secondo)
     FPS = 10
-    frames_per_secondo = pygame.time.Clock()
+    fps = pygame.time.Clock()
 
     # Creazione della finestra (screen)
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
@@ -29,7 +29,7 @@ def main():
     startGame(screen)
 
     # Oggetti
-    verme = Verme(screen)
+    verme = Verme(screen, CELL_SIZE)
     mele = Mela(screen, CELL_SIZE)
 
 
@@ -38,14 +38,11 @@ def main():
     sfondo = pygame.image.load("background.png")
     punteggio = 0
     mele.spawn()
-    x = verme.getX()
-    y = verme.getY()
-
 
     while not gameover:
         screen.fill(WHITE)
         #screen.blit(sfondo, (0, 0))
-        # disegnaGriglia(screen)
+        disegnaGriglia(screen)
         mele.disegna()
         verme.disegna()
         for event in pygame.event.get():
@@ -54,19 +51,17 @@ def main():
                 sys.exit()
 
         verme.muovi()
-        gameover = controlloBordi(verme.getX(), verme.getY())
+        gameover = verme.controlloBordi()
 
         if verme.mangiaMele(mele.getX(), mele.getY()):
             print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
             punteggio += 1
-            if FPS == 30:
-                pass
-            else:
-                FPS += 10
+            if FPS <= 30:
+                FPS += 1
 
         pygame.display.update()
-        frames_per_secondo.tick(FPS)
+        fps.tick(FPS)
 
     return messaggioGameOver(screen, punteggio)
 

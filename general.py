@@ -73,20 +73,6 @@ def disegnaGriglia(screen):
     for y in range(0, WIN_HEIGHT, CELL_SIZE):
         pygame.draw.line(screen, BLACK, (0, y), (WIN_WIDTH, y), 1)
 
-#Funzione che controlla se il serpente è uscito fuori dai bordi
-def controlloBordi(x, y):
-    finito = False  # finitO = False il gioco non è finito, finito = True il gioco finisce
-
-    if x >= WIN_WIDTH:
-        finito = True
-    if x <= 0:
-        finito = True
-    if y >= WIN_HEIGHT:
-        finito = True
-    if y <= 0:
-        finito = True
-
-    return finito
 
 # Funzione per stampare il messaggio di gameover con relativo punteggio
 def messaggioGameOver(screen, score=0):
