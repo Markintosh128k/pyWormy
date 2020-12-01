@@ -23,7 +23,7 @@ class Verme:
         self.y = 240
 
         # direzioni x e y del vermi
-        self.change_x = 0
+        self.change_x = 20
         self.change_y = 0
 
         # grandezza della cella del seprente
@@ -42,8 +42,8 @@ class Verme:
     # Funzione che restituisce se il verme va fuori dai bordi
     def controlloBordi(self):
         finito = False
-        x = self.vermeCord[0][0]
-        y = self.vermeCord[0][1]
+        x = self.vermeCord[-1][0]
+        y = self.vermeCord[-1][1]
         if x >= 500:
             finito = True
         if x <= 0:
@@ -138,7 +138,7 @@ class Verme:
             self.change_y = 0
             #testa sx
 
-
+        '''
         self.imgTesta = self.vermeImg[-1]
         x = self.vermeCord[-1][0]
         y = self.vermeCord[-1][1]
@@ -160,13 +160,17 @@ class Verme:
         elif self.y + self.change_y < self.y:
             self.imgTesta = self.testaList[0]
 
-        self.vermeImg[-1] = self.imgTesta
-
+        self.vermeImg.append(self.imgTesta)
+        self.vermeImg.pop(0)
+        self.vermeImg[0] = self.imgCoda
+        self.vermeImg[1] = self.imgCorpo
+        '''
         self.x += self.change_x
         self.y += self.change_y
 
         self.vermeCord.append((self.x, self.y))
         self.vermeCord.pop(0)
+        print(self.vermeCord)
 
 
 
@@ -174,6 +178,9 @@ class Verme:
     # Funzione che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
         if self.x == mx and self.y == my:
+            self.vermeCord.append((self.x, self.y))
+            self.vermeImg.append(self.imgTesta)
+            self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
         else:
             self.mangiato = False
