@@ -1,6 +1,6 @@
-# Wormy
- Wormy è la nostra copia del classicissimo gioco Snake,
- Gioco è stato progettato in UML Star e  poi successivamente
+# pyWormy
+ pyWormy è la nostra copia del classicissimo gioco Snake,
+ esso è stato progettato in UML Star e successivamente
  scritto esclusivamente scritto in Python 3.9 con l'aiuto della
  libreria pygame.
 
