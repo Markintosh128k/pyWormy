@@ -22,6 +22,9 @@ class Verme:
         self.x = 240
         self.y = 240
 
+        # direzione del verme
+        self.direzione = "destra"
+
         # direzioni x e y del vermi
         self.change_x = 20
         self.change_y = 0
@@ -118,25 +121,31 @@ class Verme:
     def muovi(self):
         key = pygame.key.get_pressed()
 
-        if key[pygame.K_DOWN]:
+        if key[pygame.K_DOWN] and self.direzione != "up":
             self.change_y = self.size
             self.change_x = 0
+            self.direzione = "down" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #tests giu
 
-        elif key[pygame.K_UP]:
+        elif key[pygame.K_UP] and self.direzione != "down":
             self.change_y = -self.size
             self.change_x = 0
+            self.direzione = "up" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa su
 
-        if key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT] and self.direzione != "sinistra":
             self.change_x = self.size
             self.change_y = 0
+            self.direzione = "destra" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa dx
 
-        elif key[pygame.K_LEFT]:
+        elif key[pygame.K_LEFT] and self.direzione != "destra":
             self.change_x = -self.size
             self.change_y = 0
+            self.direzione = "sinistra" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa sx
+        else:
+            pass
 
         '''
         self.imgTesta = self.vermeImg[-1]
