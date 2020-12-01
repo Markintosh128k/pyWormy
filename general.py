@@ -77,7 +77,7 @@ def disegnaGriglia(screen):
 # Funzione per stampare il messaggio di gameover con relativo punteggio
 def messaggioGameOver(screen, score=0):
     mystr = str(score)
-    messaggio(screen, ["GAME OVER", "PUNTEGGIO: ", mystr, "PREMI SPAZIO PER RIPARIARE", "ESC PER USCIRE"])
+    messaggio(screen, ["GAME OVER", "PUNTEGGIO: ", mystr, "PREMI SPAZIO PER RIGIOCARE", "PREMI ESC PER USCIRE"])
     fine = tastimenu()
 
     return fine #fine = True il gico finisce, fine = Fale il gioco continua ancora
