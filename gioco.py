@@ -52,13 +52,18 @@ def main():
 
         verme.muovi()
         gameover = verme.controlloBordi()
+        if not gameover:
+            gameover = verme.checkEatItSelf()
 
+        print(verme.checkEatItSelf())
+        
         if verme.mangiaMele(mele.getX(), mele.getY()):
             print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
             punteggio += 1
             if FPS <= 30:
-                FPS += 1
+                #FPS += 1
+                pass
 
         pygame.display.update()
         fps.tick(FPS)

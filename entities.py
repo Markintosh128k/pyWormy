@@ -144,8 +144,6 @@ class Verme:
             self.change_y = 0
             self.direzione = "sinistra" # Controllo sulla direzione per evitare che il serpente giri su se stesso
             #testa sx
-        else:
-            pass
 
         '''
         self.imgTesta = self.vermeImg[-1]
@@ -179,9 +177,16 @@ class Verme:
 
         self.vermeCord.append((self.x, self.y))
         self.vermeCord.pop(0)
-        print(self.vermeCord)
+        #print(self.vermeCord)
 
+    # Funzione che controlla se il serpente ha mangiato se stesso
+    def checkEatItSelf(self):
+        finto = False
+        for i in range(len(self.vermeCord) - 1):
+            if self.vermeCord[-1] == self.vermeCord[i]:
+                finto = True
 
+        return finto
 
 
     # Funzione che controlla se il serpente ha mangiato la mela
