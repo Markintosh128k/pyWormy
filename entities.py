@@ -59,30 +59,48 @@ class Verme:
     def muoviDown(self):
         self.change_x = 0
         self.change_y = self.size
+        self.imgTesta = pygame.image.load(self.testaList[2])
 
     # Funzione per cambaire direzione
     def muoviUp(self):
         self.change_x = 0
         self.change_y = - self.size
+        self.imgTesta = pygame.image.load(self.testaList[0])
 
     # Funzione per cambaire direzione
     def muoviRight(self):
         self.change_x = self.size
         self.change_y = 0
+        self.imgTesta = pygame.image.load(self.testaList[1])
 
     # Funzione per cambaire direzione
     def muoviLeft(self):
         self.change_x = - self.size
         self.change_y = 0
+        self.imgTesta = pygame.image.load(self.testaList[3])
 
     def popAppend(self):
         self.vermeCord.append((self.x, self.y))
         self.vermeCord.pop(0)
 
+        self.vermeImg[-1] = self.imgTesta
+        #self.changeImg(self.vermeCord[-1], self.testaList)
+
+    def changeImg(self, vermeList, imgList):
+        if self.change_x == self.size:
+            vermeList = pygame.image.load(imgList[1])
+        elif self.change_x == - self.size:
+            vermeList = pygame.image.load(imgList[3])
+
+        if self.change_y == self.size:
+            vermeList = pygame.image.load(imgList[0])
+        elif self.change_y == - self.size:
+            vermeList = pygame.image.load(imgList[2])
 
     def muovi(self):
         self.x += self.change_x
         self.y += self.change_y
+
     # Funzione che controlla se il serpente ha mangiato se stesso
     def checkEatItSelf(self):
         finto = False
