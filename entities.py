@@ -35,6 +35,9 @@ class Verme:
         self.vermeImg = [self.imgCoda, self.imgCorpo, self.imgTesta]
         self.vermeCord = [(self.x - 40, self.y), (self.x - 20, self.y), (self.x, self.y),]
 
+        # effetto sonoro, si attiva quando una mela viene mangiata
+        self.sound = pygame.mixer.Sound("slurp.wav")
+
     # Restituisce il valore posizione del serpente
     def getPosizione(self):
         return self.vermeCord[0]
@@ -110,7 +113,6 @@ class Verme:
 
         return finto
 
-
     # Funzione che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
         if self.x == mx and self.y == my:
@@ -118,6 +120,8 @@ class Verme:
             self.vermeImg.append(self.imgTesta)
             self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
+            pygame.mixer.Sound.play(self.sound)
+            pygame.mixer.music.stop()
         else:
             self.mangiato = False
 
@@ -176,4 +180,7 @@ class Mela:
     # Disegna la mela
     def disegna(self):
         self.screen.blit(self.imgLoad, (self.x, self.y))
+
+    def antiCollisioni(self, vermeCord):
+        pass
 

@@ -39,6 +39,8 @@ def main():
     punteggio = 0
     mele.spawn()
 
+
+
     while not gameover:
         screen.fill(WHITE)
         #screen.blit(sfondo, (0, 0))
