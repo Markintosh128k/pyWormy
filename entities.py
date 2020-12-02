@@ -121,7 +121,7 @@ class Verme:
             self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
             pygame.mixer.Sound.play(self.sound)
-            pygame.mixer.music.stop()
+            #pygame.mixer.music.stop()
         else:
             self.mangiato = False
 
