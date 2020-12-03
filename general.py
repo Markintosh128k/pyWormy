@@ -15,7 +15,7 @@ WIN_HEIGHT = 500
 CELL_SIZE = 20
 
 #Dichiarazione Font
-FONT_OBJ = pygame.font.Font('freesansbold.ttf', 15)
+FONT_OBJ = pygame.font.Font('SF Pixelate.ttf', 25)
 
 #Procedurea per stampre a schermo una scritta
 def messaggio(screen, listaDiMessaggi):
@@ -61,7 +61,7 @@ def tastimenu():
 
 #Procedura menu iniziale
 def startGame(screen):
-    messaggio(screen, ["PREMI SPAZIO PER PAZZIARE", "PREMI ESC PER USCIRE"])
+    messaggio(screen, ["PREMI SPAZIO PER GIOCARE", "   ", "PREMI ESC PER USCIRE"])
     finito = False
     tastimenu()  
 

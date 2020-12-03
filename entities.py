@@ -11,11 +11,11 @@ class Verme:
 
         #0 sopra, 1 destra, 2 giu, 3 sinistra
         self.testaList = ["Sprites/Sprites2/TestaSopra.png","Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
-        self.corpoList = ["Sprites/Sprites2/CorpoVerticale.png","Sprites/Sprites2/CorpoOrizzontale.png", "Sprites/Sprites2/CorpoVerticale.png", "Sprites/Sprites2/CorpoOrizzontale.png"]
+        self.corpoList = "Sprites/Sprites2/CorpoSerpente.png"
         self.codaList = ["Sprites/Sprites2/CodaSopra.png","Sprites/Sprites2/CodaDestra.png", "Sprites/Sprites2/CodaGiu.png", "Sprites/Sprites2/CodaSinistra.png"]
 
         self.imgTesta = pygame.image.load(self.testaList[1])
-        self.imgCorpo = pygame.image.load(self.corpoList[1])
+        self.imgCorpo = pygame.image.load(self.corpoList)
         self.imgCoda = pygame.image.load(self.codaList[1])
 
         # posizioni x ed y attuali del verme
