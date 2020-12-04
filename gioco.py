@@ -1,5 +1,3 @@
-import pygame
-import sys
 from entities import *
 from general import *
 
@@ -26,14 +24,13 @@ def main():
     # Creazione della finestra (screen)
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     pygame.display.set_caption("pyWormy")
-    menu = pygame.image.load("menu.png")
+    menu = pygame.image.load("Img/menu.png")
     screen.blit(menu, (0, 0))
-    startGame(menu)
+    tastimenu()
 
     # Oggetti
     verme = Verme(screen, CELL_SIZE)
     mele = Mela(screen, CELL_SIZE)
-
 
     # Inizializzazione varibili utili
     gameover = False
@@ -73,9 +70,8 @@ def main():
             print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
             punteggio += 1
-            if FPS <= 30:
-                #FPS += 1
-                pass
+            if FPS <= 20:
+                FPS += 1
 
         pygame.display.update()
         fps.tick(FPS)

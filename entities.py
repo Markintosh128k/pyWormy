@@ -17,8 +17,8 @@ class Verme:
 
         # Caricamento immagini testa
         # 0 sopra, 1 destra, 2 giu, 3 sinistra
-        self.testaList = ["Sprites/Sprites3/TestaSopra.png","Sprites/Sprites3/TestaDestra.png", "Sprites/Sprites3/TestaGiu.png", "Sprites/Sprites3/TestaSinistra.png"]
-        self.corpoList = "Sprites/Sprites3/CorpoSerpente.png"
+        self.testaList = ["Img/Sprites/Sprites3/TestaSopra.png","Img/Sprites/Sprites3/TestaDestra.png", "Img/Sprites/Sprites3/TestaGiu.png", "Img/Sprites/Sprites3/TestaSinistra.png"]
+        self.corpoList = "Img/Sprites/Sprites3/CorpoSerpente.png"
 
         self.imgTesta = pygame.image.load(self.testaList[self.direzione])
         self.imgCorpo = pygame.image.load(self.corpoList)
@@ -30,7 +30,7 @@ class Verme:
 
 
         # effetto sonoro, si attiva quando una mela viene mangiata
-        self.sound = pygame.mixer.Sound("slurp.wav")
+        self.sound = pygame.mixer.Sound("Sound/slurp.wav")
 
         # direzioni x e y del vermi
         self.change_x = 20
@@ -123,7 +123,6 @@ class Verme:
             self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
             pygame.mixer.Sound.play(self.sound)
-            #pygame.mixer.music.stop()
         else:
             self.mangiato = False
 
@@ -140,24 +139,21 @@ class Mela:
     # Costruttore
     def __init__(self, screen, pixel):
         self.screen = screen
+
+        #grandezza
         self.size = pixel
 
         # prende l'immagine della mela dalla cartella
         dir = os.path.dirname(__file__)
-        dirMela = "Sprites/Sprites1/meloide.png"
+        dirMela = "Img/Sprites/Sprites1/meloide.png"
         mela = os.path.join(dir, dirMela)
 
         #Caricamento dello sprite
         self.imgLoad = pygame.image.load(mela)
 
-        # grandezza della cella della mela
-        self.height = 20
-        self.width = 20
-
         #posizioni x e y attuali della mela
         self.x = 0
         self.y = 0
-
 
     # Restituisce il valore della x
     def getX(self):
@@ -182,7 +178,4 @@ class Mela:
     # Disegna la mela
     def disegna(self):
         self.screen.blit(self.imgLoad, (self.x, self.y))
-
-    def antiCollisioni(self, vermeCord):
-        pass
 

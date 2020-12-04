@@ -1,4 +1,5 @@
 import pygame
+import os
 import sys
 
 pygame.init()
@@ -15,7 +16,7 @@ WIN_HEIGHT = 500
 CELL_SIZE = 20
 
 #Dichiarazione Font
-FONT_OBJ = pygame.font.Font('SF Pixelate.ttf', 25)
+FONT_OBJ = pygame.font.Font('SF_Pixelate.ttf', 25)
 
 #Procedurea per stampre a schermo una scritta
 def messaggio(screen, listaDiMessaggi):
@@ -35,7 +36,6 @@ def messaggio(screen, listaDiMessaggi):
     for testo in listaDiMessaggi:
         screen.blit(text[i], text_rect[i])
         i += 1
-
 
 #Funzione per gestire i tasti premuti nel menu
 def tastimenu():
@@ -58,11 +58,6 @@ def tastimenu():
                 sys.exit()
         pygame.display.update()   
     return fineGame
-
-#Procedura menu iniziale
-def startGame(screen):
-    finito = False
-    tastimenu()  
 
 #Procedura per diegnare la griglia
 def disegnaGriglia(screen):
