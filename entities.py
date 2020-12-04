@@ -38,6 +38,10 @@ class Verme:
         # effetto sonoro, si attiva quando una mela viene mangiata
         self.sound = pygame.mixer.Sound("slurp.wav")
 
+        # direzione
+        self.direzione = 1
+
+
     # Restituisce il valore posizione del serpente
     def getPosizione(self):
         return self.vermeCord[0]
@@ -60,27 +64,35 @@ class Verme:
 
     # Funzione per cambaire direzione
     def muoviDown(self):
-        self.change_x = 0
-        self.change_y = self.size
-        self.imgTesta = pygame.image.load(self.testaList[2])
+        if self.direzione != 0:
+            self.change_x = 0
+            self.change_y = self.size
+            self.imgTesta = pygame.image.load(self.testaList[2])
+            self.direzione = 2
 
     # Funzione per cambaire direzione
     def muoviUp(self):
-        self.change_x = 0
-        self.change_y = - self.size
-        self.imgTesta = pygame.image.load(self.testaList[0])
+        if self.direzione != 2:
+            self.change_x = 0
+            self.change_y = - self.size
+            self.imgTesta = pygame.image.load(self.testaList[0])
+            self.direzione = 0
 
     # Funzione per cambaire direzione
     def muoviRight(self):
-        self.change_x = self.size
-        self.change_y = 0
-        self.imgTesta = pygame.image.load(self.testaList[1])
+        if self.direzione != 3:
+            self.change_x = self.size
+            self.change_y = 0
+            self.imgTesta = pygame.image.load(self.testaList[1])
+            self.direzione = 1
 
     # Funzione per cambaire direzione
     def muoviLeft(self):
-        self.change_x = - self.size
-        self.change_y = 0
-        self.imgTesta = pygame.image.load(self.testaList[3])
+        if self.direzione != 1:
+            self.change_y = 0
+            self.change_x = - self.size
+            self.imgTesta = pygame.image.load(self.testaList[3])
+            self.direzione = 3
 
     def popAppend(self):
         self.vermeCord.append((self.x, self.y))
