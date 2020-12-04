@@ -54,6 +54,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     verme.muoviUp()
+
                 elif event.key == pygame.K_DOWN:
                     verme.muoviDown()
                 elif event.key == pygame.K_RIGHT:
@@ -67,8 +68,6 @@ def main():
         gameover = verme.controlloBordi()
         if not gameover:
             gameover = verme.checkEatItSelf()
-
-        print(verme.checkEatItSelf())
 
         if verme.mangiaMele(mele.getX(), mele.getY()):
             print("MELA MELINDAAA FANTASTICAAA!")

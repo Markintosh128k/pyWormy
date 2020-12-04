@@ -7,20 +7,30 @@ class Verme:
     #Costruttore
     def __init__(self, screen, pixel):
         self.screen = screen
-        # Caricamento immagini testa
-
-        #0 sopra, 1 destra, 2 giu, 3 sinistra
-        self.testaList = ["Sprites/Sprites2/TestaSopra.png","Sprites/Sprites2/TestaDestra.png", "Sprites/Sprites2/TestaGiu.png", "Sprites/Sprites2/TestaSinistra.png"]
-        self.corpoList = "Sprites/Sprites2/CorpoSerpente.png"
-        self.codaList = ["Sprites/Sprites2/CodaSopra.png","Sprites/Sprites2/CodaDestra.png", "Sprites/Sprites2/CodaGiu.png", "Sprites/Sprites2/CodaSinistra.png"]
-
-        self.imgTesta = pygame.image.load(self.testaList[1])
-        self.imgCorpo = pygame.image.load(self.corpoList)
-        self.imgCoda = pygame.image.load(self.codaList[1])
 
         # posizioni x ed y attuali del verme
         self.x = 240
         self.y = 240
+
+        # variabile che ci dice la direzione del verme
+        self.direzione = 1
+
+        # Caricamento immagini testa
+        # 0 sopra, 1 destra, 2 giu, 3 sinistra
+        self.testaList = ["Sprites/Sprites3/TestaSopra.png","Sprites/Sprites3/TestaDestra.png", "Sprites/Sprites3/TestaGiu.png", "Sprites/Sprites3/TestaSinistra.png"]
+        self.corpoList = "Sprites/Sprites3/CorpoSerpente.png"
+
+        self.imgTesta = pygame.image.load(self.testaList[self.direzione])
+        self.imgCorpo = pygame.image.load(self.corpoList)
+
+        # lista posizioni verme
+        self.vermeImg = [self.imgCorpo,self.imgCorpo, self.imgTesta]
+        self.vermeCord = [(self.x - 40, self.y), (self.x - 20, self.y), (self.x, self.y)]
+        self.vermeDir = [self.direzione, self.direzione, self.direzione]
+
+
+        # effetto sonoro, si attiva quando una mela viene mangiata
+        self.sound = pygame.mixer.Sound("slurp.wav")
 
         # direzioni x e y del vermi
         self.change_x = 20
@@ -32,19 +42,6 @@ class Verme:
         # mangiato = True se ha mangiato la mela, mangiato = False se non ha ancora mangiato la mela
         self.mangiato = False
 
-        self.vermeImg = [self.imgCoda, self.imgCorpo, self.imgTesta]
-        self.vermeCord = [(self.x - 40, self.y), (self.x - 20, self.y), (self.x, self.y),]
-
-        # effetto sonoro, si attiva quando una mela viene mangiata
-        self.sound = pygame.mixer.Sound("slurp.wav")
-
-        # direzione
-        self.direzione = 1
-
-
-    # Restituisce il valore posizione del serpente
-    def getPosizione(self):
-        return self.vermeCord[0]
 
     # Funzione che restituisce se il verme va fuori dai bordi
     def controlloBordi(self):
@@ -67,7 +64,6 @@ class Verme:
         if self.direzione != 0:
             self.change_x = 0
             self.change_y = self.size
-            self.imgTesta = pygame.image.load(self.testaList[2])
             self.direzione = 2
 
     # Funzione per cambaire direzione
@@ -75,7 +71,6 @@ class Verme:
         if self.direzione != 2:
             self.change_x = 0
             self.change_y = - self.size
-            self.imgTesta = pygame.image.load(self.testaList[0])
             self.direzione = 0
 
     # Funzione per cambaire direzione
@@ -83,7 +78,6 @@ class Verme:
         if self.direzione != 3:
             self.change_x = self.size
             self.change_y = 0
-            self.imgTesta = pygame.image.load(self.testaList[1])
             self.direzione = 1
 
     # Funzione per cambaire direzione
@@ -91,30 +85,26 @@ class Verme:
         if self.direzione != 1:
             self.change_y = 0
             self.change_x = - self.size
-            self.imgTesta = pygame.image.load(self.testaList[3])
             self.direzione = 3
-
-    def popAppend(self):
-        self.vermeCord.append((self.x, self.y))
-        self.vermeCord.pop(0)
-
-        self.vermeImg[-1] = self.imgTesta
-        #self.changeImg(self.vermeCord[-1], self.testaList)
-
-    def changeImg(self, vermeList, imgList):
-        if self.change_x == self.size:
-            vermeList = pygame.image.load(imgList[1])
-        elif self.change_x == - self.size:
-            vermeList = pygame.image.load(imgList[3])
-
-        if self.change_y == self.size:
-            vermeList = pygame.image.load(imgList[0])
-        elif self.change_y == - self.size:
-            vermeList = pygame.image.load(imgList[2])
 
     def muovi(self):
         self.x += self.change_x
         self.y += self.change_y
+
+    def popAppend(self):
+        # aggiungo le nuove coordinate
+        self.vermeCord.append((self.x, self.y))
+        self.vermeCord.pop(0)
+
+        # aggiungo la nuova diezione
+        self.vermeDir.append(self.direzione)
+        self.vermeDir.pop(0)
+
+        # assegno le immagini
+        self.imgTesta = pygame.image.load(self.testaList[self.vermeDir[-1]])
+
+        # cambiamo le immgaini nella lista
+        self.vermeImg[-1] = self.imgTesta
 
     # Funzione che controlla se il serpente ha mangiato se stesso
     def checkEatItSelf(self):
