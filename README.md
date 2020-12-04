@@ -14,7 +14,7 @@
 # IMMAGINI
 
 # DOWNLOAD
-* [Windows (.exe)](https://drive.google.com/file/d/1XfS4rO199qKMg4E-Ht-gxpYWk1w5YtbZ/view?usp=sharing).
+* [Windows (.exe)](https://drive.google.com/file/d/1XfS4rO199qKMg4E-Ht-gxpYWk1w5YtbZ/view?usp=sharing)
 
 
 
