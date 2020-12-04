@@ -4,6 +4,14 @@ import sys
 
 pygame.init()
 
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 # Colori utili
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -16,11 +24,14 @@ WIN_HEIGHT = 500
 CELL_SIZE = 20
 
 # Dichiarazione Font
-FONT_OBJ = pygame.font.Font('SF_Pixelate.ttf', 25)
-FONT_OBJ1 = pygame.font.Font('SF_Pixelate.ttf', 15)
+assetFONT_OBJ_url = resource_path('SF_Pixelate.ttf')
+FONT_OBJ = pygame.font.Font(assetFONT_OBJ_url, 25)
+FONT_OBJ1 = pygame.font.Font(assetFONT_OBJ_url, 15)
+
 
 # Musica
-sound = pygame.mixer.Sound("Sounds/musica.wav")
+assetSound_url = resource_path("Sounds/musica.wav")
+sound = pygame.mixer.Sound(assetSound_url)
 
 #Procedurea per stampre a schermo una scritta
 def messaggio(screen, listaDiMessaggi):
@@ -47,7 +58,8 @@ def score(screen, score):
 
 
 def start(screen):
-    menu = pygame.image.load("Img/menu.png")
+    assetMenu_url = resource_path("Img/menu.png")
+    menu = pygame.image.load(assetMenu_url)
     screen.blit(menu, (0, 0))
     sound.play(-1)
     tastimenu()
@@ -76,7 +88,7 @@ def tastimenu():
         pygame.display.update()   
     return fineGame
 
-#Procedura per diegnare la griglia
+# Procedura per diegnare la griglia
 def disegnaGriglia(screen):
     for x in range(0, WIN_WIDTH, CELL_SIZE):
         pygame.draw.line(screen, BLACK, (x, 0), (x, WIN_HEIGHT), 1)
@@ -88,7 +100,8 @@ def disegnaGriglia(screen):
 # Funzione per stampare il messaggio di gameover con relativo punteggio
 def messaggioGameOver(screen, score=0):
     mystr = str(score)
-    gameOver = pygame.image.load("Img/GameOver.png")
+    assetGameOver_url = resource_path("Img/GameOver.png")
+    gameOver = pygame.image.load(assetGameOver_url)
     screen.blit(gameOver, (0, 0))
     text = FONT_OBJ.render(str(score), True, YELLOW)
     screen.blit(text, [240, 373])

@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+from general import *
 
 #Classe del serpente
 class Verme:
@@ -18,9 +19,11 @@ class Verme:
         # Caricamento immagini testa
         # 0 sopra, 1 destra, 2 giu, 3 sinistra
         self.testaList = ["Img/Sprites/Sprites3/TestaSopra.png","Img/Sprites/Sprites3/TestaDestra.png", "Img/Sprites/Sprites3/TestaGiu.png", "Img/Sprites/Sprites3/TestaSinistra.png"]
-        self.imgTesta = pygame.image.load(self.testaList[self.direzione])
+        assetTesta_url = resource_path(self.testaList[self.direzione])
+        self.imgTesta = pygame.image.load(assetTesta_url)
 
-        self.imgCorpo = pygame.image.load("Img/Sprites/Sprites3/CorpoSerpente.png")
+        assetCorpo_url = resource_path("Img/Sprites/Sprites3/CorpoSerpente.png")
+        self.imgCorpo = pygame.image.load(assetCorpo_url)
 
         # lista posizioni verme
         self.vermeImg = [self.imgCorpo,self.imgCorpo, self.imgTesta]
@@ -29,7 +32,8 @@ class Verme:
 
 
         # effetto sonoro, si attiva quando una mela viene mangiata
-        self.sound = pygame.mixer.Sound("Sounds/slurp.wav")
+        assetSuono_url = resource_path("Sounds/slurp.wav")
+        self.sound = pygame.mixer.Sound(assetSuono_url)
 
         # direzioni x e y del vermi
         self.change_x = 20
@@ -100,7 +104,8 @@ class Verme:
         self.vermeDir.pop(0)
 
         # assegno le immagini
-        self.imgTesta = pygame.image.load(self.testaList[self.vermeDir[-1]])
+        assetTesta_url = resource_path(self.testaList[self.vermeDir[-1]])
+        self.imgTesta = pygame.image.load(assetTesta_url)
 
         # cambiamo le immgaini nella lista
         self.vermeImg[-1] = self.imgTesta
@@ -144,15 +149,16 @@ class Mela:
 
         # prende l'immagine della mela dalla cartella
         self.melaList = ["Img/Sprites/Sprites3/Mela/brackets.png", "Img/Sprites/Sprites3/Mela/cmd.png", "Img/Sprites/Sprites3/Mela/ciclofor.png", "Img/Sprites/Sprites3/Mela/puntoevirgola.png",]
-
-
+       
+        # Caricamento dello sprite
+        n = random.randint(0, len(self.melaList)-1)
+        assetMela_url = resource_path(self.melaList[n])
+        self.imgLoad = pygame.image.load(assetMela_url)
+        
         #posizioni x e y attuali della mela
         self.x = 0
         self.y = 0
-
-        # Caricamento dello sprite
-        n = random.randint(0, len(self.melaList)-1)
-        self.imgLoad = pygame.image.load(self.melaList[n])
+       
 
     # Restituisce il valore della x
     def getX(self):
@@ -176,7 +182,8 @@ class Mela:
 
         # Caricamento dello sprite
         n = random.randint(0, len(self.melaList)-1)
-        self.imgLoad = pygame.image.load(self.melaList[n])
+        assetMela_url = resource_path(self.melaList[n])
+        self.imgLoad = pygame.image.load(assetMela_url)
 
     # Disegna la mela
     def disegna(self):

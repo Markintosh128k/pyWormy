@@ -23,7 +23,8 @@ def main():
 
     # Creazione della finestra (screen)
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    pygame.display.set_caption("pyWormy")
+    #assetIcon_url = resource_path('')
+    pygame.display.set_caption("pyWormy", "pyWormyIcon.png")
     start(screen)
 
     # Oggetti
@@ -32,7 +33,8 @@ def main():
 
     # Inizializzazione varibili utili
     gameover = False
-    sfondo = pygame.image.load("Img/background1.png")
+    assetSfondo = resource_path("Img/background1.png")
+    sfondo = pygame.image.load(assetSfondo)
     punteggio = 0
     mele.spawn()
 
@@ -49,7 +51,6 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     verme.muoviUp()
-
                 elif event.key == pygame.K_DOWN:
                     verme.muoviDown()
                 elif event.key == pygame.K_RIGHT:
