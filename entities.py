@@ -30,7 +30,7 @@ class Verme:
 
 
         # effetto sonoro, si attiva quando una mela viene mangiata
-        self.sound = pygame.mixer.Sound("Sound/slurp.wav")
+        self.sound = pygame.mixer.Sound("Sounds/slurp.wav")
 
         # direzioni x e y del vermi
         self.change_x = 20
@@ -122,7 +122,7 @@ class Verme:
             self.vermeImg.append(self.imgTesta)
             self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
-            pygame.mixer.Sound.play(self.sound)
+            self.sound.play()
         else:
             self.mangiato = False
 

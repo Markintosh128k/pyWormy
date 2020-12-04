@@ -8,15 +8,18 @@ pygame.init()
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-#Larghezza e altezza finestera
+# Larghezza e altezza finestera
 WIN_WIDTH = 500
 WIN_HEIGHT = 500
 
-#Grandezza celle
+# Grandezza celle
 CELL_SIZE = 20
 
-#Dichiarazione Font
+# Dichiarazione Font
 FONT_OBJ = pygame.font.Font('SF_Pixelate.ttf', 25)
+
+# Musica
+sound = pygame.mixer.Sound("Sounds/musica.wav")
 
 #Procedurea per stampre a schermo una scritta
 def messaggio(screen, listaDiMessaggi):
@@ -36,6 +39,12 @@ def messaggio(screen, listaDiMessaggi):
     for testo in listaDiMessaggi:
         screen.blit(text[i], text_rect[i])
         i += 1
+
+def start():
+    sound.play(-1)
+    tastimenu()
+    pygame.mixer.Sound.stop(sound)
+
 
 #Funzione per gestire i tasti premuti nel menu
 def tastimenu():

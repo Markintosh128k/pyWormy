@@ -26,7 +26,7 @@ def main():
     pygame.display.set_caption("pyWormy")
     menu = pygame.image.load("Img/menu.png")
     screen.blit(menu, (0, 0))
-    tastimenu()
+    start()
 
     # Oggetti
     verme = Verme(screen, CELL_SIZE)
@@ -34,7 +34,7 @@ def main():
 
     # Inizializzazione varibili utili
     gameover = False
-    sfondo = pygame.image.load("background.png")
+    sfondo = pygame.image.load("background1.png")
     punteggio = 0
     mele.spawn()
 
