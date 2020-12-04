@@ -61,7 +61,6 @@ def tastimenu():
 
 #Procedura menu iniziale
 def startGame(screen):
-    messaggio(screen, ["PREMI SPAZIO PER GIOCARE", "   ", "PREMI ESC PER USCIRE"])
     finito = False
     tastimenu()  
 
@@ -82,12 +81,3 @@ def messaggioGameOver(screen, score=0):
 
     return fine #fine = True il gico finisce, fine = Fale il gioco continua ancora
 
-# Procedura per dare la sensazione di movimento allo sprite del serpente
-"""def iteraImmagini(lista, x, y, screen):
-    animazioni = lista
-    all_imgs = {}
-    for img in animazioni:
-        all_imgs[img] = pygame.image.load(img)
-    
-    for img in animazioni:
-        screen.blit(all_imgs[img], (x, y))"""

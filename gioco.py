@@ -25,8 +25,10 @@ def main():
 
     # Creazione della finestra (screen)
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    pygame.display.set_caption("Wormy")
-    startGame(screen)
+    pygame.display.set_caption("pyWormy")
+    menu = pygame.image.load("menu.png")
+    screen.blit(menu, (0, 0))
+    startGame(menu)
 
     # Oggetti
     verme = Verme(screen, CELL_SIZE)
@@ -39,11 +41,9 @@ def main():
     punteggio = 0
     mele.spawn()
 
-
-
     while not gameover:
         screen.fill(WHITE)
-        #screen.blit(sfondo, (0, 0))
+        screen.blit(sfondo, (0, 0))
         disegnaGriglia(screen)
         mele.disegna()
         verme.disegna()
