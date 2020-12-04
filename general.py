@@ -90,8 +90,8 @@ def messaggioGameOver(screen, score=0):
     mystr = str(score)
     gameOver = pygame.image.load("Img/GameOver.png")
     screen.blit(gameOver, (0, 0))
-    text = FONT_OBJ1.render(str(score), True, YELLOW)
-    screen.blit(text, [250, 480])
+    text = FONT_OBJ.render(str(score), True, YELLOW)
+    screen.blit(text, [240, 373])
     fine = tastimenu()
 
     return fine #fine = True il gico finisce, fine = Fale il gioco continua ancora
