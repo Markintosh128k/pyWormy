@@ -34,7 +34,7 @@ def main():
 
     # Inizializzazione varibili utili
     gameover = False
-    sfondo = pygame.image.load("background1.png")
+    sfondo = pygame.image.load("Img/background1.png")
     punteggio = 0
     mele.spawn()
 

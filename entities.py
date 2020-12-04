@@ -18,10 +18,9 @@ class Verme:
         # Caricamento immagini testa
         # 0 sopra, 1 destra, 2 giu, 3 sinistra
         self.testaList = ["Img/Sprites/Sprites3/TestaSopra.png","Img/Sprites/Sprites3/TestaDestra.png", "Img/Sprites/Sprites3/TestaGiu.png", "Img/Sprites/Sprites3/TestaSinistra.png"]
-        self.corpoList = "Img/Sprites/Sprites3/CorpoSerpente.png"
-
         self.imgTesta = pygame.image.load(self.testaList[self.direzione])
-        self.imgCorpo = pygame.image.load(self.corpoList)
+
+        self.imgCorpo = pygame.image.load("Img/Sprites/Sprites3/CorpoSerpente.png")
 
         # lista posizioni verme
         self.vermeImg = [self.imgCorpo,self.imgCorpo, self.imgTesta]
@@ -144,16 +143,16 @@ class Mela:
         self.size = pixel
 
         # prende l'immagine della mela dalla cartella
-        dir = os.path.dirname(__file__)
-        dirMela = "Img/Sprites/Sprites1/meloide.png"
-        mela = os.path.join(dir, dirMela)
+        self.melaList = ["Img/Sprites/Sprites3/Mela/brackets.png", "Img/Sprites/Sprites3/Mela/cmd.png", "Img/Sprites/Sprites3/Mela/ciclofor.png", "Img/Sprites/Sprites3/Mela/puntoevirgola.png",]
 
-        #Caricamento dello sprite
-        self.imgLoad = pygame.image.load(mela)
 
         #posizioni x e y attuali della mela
         self.x = 0
         self.y = 0
+
+        # Caricamento dello sprite
+        n = random.randint(0, len(self.melaList)-1)
+        self.imgLoad = pygame.image.load(self.melaList[n])
 
     # Restituisce il valore della x
     def getX(self):
@@ -174,6 +173,10 @@ class Mela:
         if n % self.size != 0:
             n += 10
         self.y = n
+
+        # Caricamento dello sprite
+        n = random.randint(0, len(self.melaList)-1)
+        self.imgLoad = pygame.image.load(self.melaList[n])
 
     # Disegna la mela
     def disegna(self):
