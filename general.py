@@ -7,7 +7,7 @@ pygame.init()
 # Colori utili
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-
+YELLOW = (217, 210, 57)
 # Larghezza e altezza finestera
 WIN_WIDTH = 500
 WIN_HEIGHT = 500
@@ -17,13 +17,13 @@ CELL_SIZE = 20
 
 # Dichiarazione Font
 FONT_OBJ = pygame.font.Font('SF_Pixelate.ttf', 25)
+FONT_OBJ1 = pygame.font.Font('SF_Pixelate.ttf', 15)
 
 # Musica
 sound = pygame.mixer.Sound("Sounds/musica.wav")
 
 #Procedurea per stampre a schermo una scritta
 def messaggio(screen, listaDiMessaggi):
-    screen.fill(BLACK)
     text = []
     text_rect = []
     i = 0
@@ -40,7 +40,15 @@ def messaggio(screen, listaDiMessaggi):
         screen.blit(text[i], text_rect[i])
         i += 1
 
-def start():
+def score(screen, score):
+    text = FONT_OBJ1.render("Your Score: " + str(score), True, YELLOW)
+    screen.blit(text, [350, 10])
+
+
+
+def start(screen):
+    menu = pygame.image.load("Img/menu.png")
+    screen.blit(menu, (0, 0))
     sound.play(-1)
     tastimenu()
     pygame.mixer.Sound.stop(sound)
@@ -80,7 +88,10 @@ def disegnaGriglia(screen):
 # Funzione per stampare il messaggio di gameover con relativo punteggio
 def messaggioGameOver(screen, score=0):
     mystr = str(score)
-    messaggio(screen, ["GAME OVER", "PUNTEGGIO: ", mystr, "PREMI SPAZIO PER RIGIOCARE", "PREMI ESC PER USCIRE"])
+    gameOver = pygame.image.load("Img/GameOver.png")
+    screen.blit(gameOver, (0, 0))
+    text = FONT_OBJ1.render(str(score), True, YELLOW)
+    screen.blit(text, [250, 480])
     fine = tastimenu()
 
     return fine #fine = True il gico finisce, fine = Fale il gioco continua ancora

@@ -24,9 +24,7 @@ def main():
     # Creazione della finestra (screen)
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     pygame.display.set_caption("pyWormy")
-    menu = pygame.image.load("Img/menu.png")
-    screen.blit(menu, (0, 0))
-    start()
+    start(screen)
 
     # Oggetti
     verme = Verme(screen, CELL_SIZE)
@@ -39,9 +37,9 @@ def main():
     mele.spawn()
 
     while not gameover:
-        screen.fill(WHITE)
         screen.blit(sfondo, (0, 0))
         #disegnaGriglia(screen)
+        score(screen, punteggio)
         mele.disegna()
         verme.disegna()
         for event in pygame.event.get():
@@ -67,7 +65,6 @@ def main():
             gameover = verme.checkEatItSelf()
 
         if verme.mangiaMele(mele.getX(), mele.getY()):
-            print("MELA MELINDAAA FANTASTICAAA!")
             mele.spawn()
             punteggio += 1
             if FPS <= 20:
