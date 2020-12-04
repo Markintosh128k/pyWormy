@@ -41,7 +41,7 @@ def main():
     while not gameover:
         screen.fill(WHITE)
         screen.blit(sfondo, (0, 0))
-        disegnaGriglia(screen)
+        #disegnaGriglia(screen)
         mele.disegna()
         verme.disegna()
         for event in pygame.event.get():
