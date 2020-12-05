@@ -1,7 +1,7 @@
 import pygame
 import random
 import os
-from general import *
+from control import *
 
 #Classe del serpente
 class Verme:
