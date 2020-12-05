@@ -119,6 +119,35 @@ class Verme:
 
         return finto
 
+    def comandi(self):
+        gameover = False
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                if event.key == pygame.K_UP:
+                    self.muoviUp()
+                elif event.key == pygame.K_DOWN:
+                    self.muoviDown()
+                elif event.key == pygame.K_RIGHT:
+                    self.muoviRight()
+                elif event.key == pygame.K_LEFT:
+                    self.muoviLeft()
+
+        self.muovi()
+        self.popAppend()
+
+        gameover = self.controlloBordi()
+        if not gameover:
+            gameover = self.checkEatItSelf()
+
+        return gameover
+
     # Funzione che controlla se il serpente ha mangiato la mela
     def mangiaMele(self, mx, my):
         if self.x == mx and self.y == my:

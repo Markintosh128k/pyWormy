@@ -16,9 +16,10 @@ def resource_path(relative_path):
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (217, 210, 57)
+
 # Larghezza e altezza finestera
-WIN_WIDTH = 500
-WIN_HEIGHT = 500
+WIN_WIDTH = 1000
+WIN_HEIGHT = 1000
 
 # Grandezza celle
 CELL_SIZE = 20
@@ -33,38 +34,94 @@ assetSound_url = resource_path("Sounds/musica.wav")
 sound = pygame.mixer.Sound(assetSound_url)
 
 #Procedurea per stampre a schermo una scritta
-def messaggio(screen, listaDiMessaggi):
-    text = []
-    text_rect = []
-    i = 0
-    j = -100
-    for testo in listaDiMessaggi:
-        text.append(FONT_OBJ.render(listaDiMessaggi[i], True, WHITE))
-        text_rect.append(text[i].get_rect())
-        text_rect[i].center = ((WIN_WIDTH / 2), (WIN_HEIGHT / 2) + j)
-        i += 1
-        j += 40
-
-    i = 0
-    for testo in listaDiMessaggi:
-        screen.blit(text[i], text_rect[i])
-        i += 1
+def disegnaTesto(text, font, color, screen, x, y):
+    text_obj = font.reder(text, 1, color)
+    text_rect = text_obj.get_rect()
+    text_rect.topleft = (x, y)
+    screen.blit(text_obj, text_rect)
 
 def score(screen, score):
     text = FONT_OBJ1.render("Your Score: " + str(score), True, YELLOW)
     screen.blit(text, [350, 10])
 
-
-def start(screen):
+def startMenu(screen):
+    # caricamento immagine sfondo menu
     assetMenu_url = resource_path("Img/menu.png")
     menu = pygame.image.load(assetMenu_url)
-    screen.blit(menu, (0, 0))
+    menu = pygame.transform.scale(menu, (1000, 1000))
+
+
+    # avvio musica
     sound.play(-1)
-    tastiEscSpace()
+
+    # azione fatta
+    azione = 'nessuna'
+
+    # bottoni
+    btnPlay = pygame.Rect(350, 300, 300, 50)
+    btnOpzioni = pygame.Rect(350, 400, 300, 50)
+    btnCreatori = pygame.Rect(350, 500, 300, 50)
+    btnEsci = pygame.Rect(350, 600, 300, 50)
+
+
+
+    # controllo azioni del menu
+    finito = False
+    click = False
+    while not finito:
+        screen.blit(menu, (0, 0))
+
+        # prendi posizioni mouse
+        mouseX, mouseY = pygame.mouse.get_pos()
+
+        # disegna pulsanti
+        pygame.draw.rect(screen, YELLOW, btnPlay)
+        pygame.draw.rect(screen, YELLOW, btnOpzioni)
+        pygame.draw.rect(screen, YELLOW, btnCreatori)
+        pygame.draw.rect(screen, YELLOW, btnEsci)
+
+        if btnPlay.collidepoint((mouseX, mouseY)):
+            if click:
+                azione = 'play'
+                finito = True
+        if btnOpzioni.collidepoint((mouseX,mouseY)):
+            if click:
+                azione = 'opzioni'
+                finito = True
+        if btnCreatori.collidepoint((mouseX,mouseY)):
+            if click:
+                azione = 'creatori'
+                finito = True
+        if btnEsci.collidepoint((mouseX, mouseY)):
+            if click:
+                azione = 'esci'
+                finito = True
+
+        click = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                azione = 'esci'
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    azione = 'esci'
+                    pygame.quit()
+                    sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        pygame.display.update()
+
     pygame.mixer.Sound.stop(sound)
+    return azione
+
+
+
 
 
 #Funzione per gestire i tasti premuti nel menu
+'''
 def tastiEscSpace():
 
     finito = False  #finito gestisce il ciclo while riga 44
@@ -85,7 +142,8 @@ def tastiEscSpace():
                 sys.exit()
         pygame.display.update()
 
-    return fineGame
+    return fineGame'''
+
 
 # Procedura per diegnare la griglia
 def disegnaGriglia(screen):
@@ -97,7 +155,7 @@ def disegnaGriglia(screen):
 
 
 # Funzione per stampare il messaggio di gameover con relativo punteggio
-def messaggioGameOver(screen, score=0):
+'''def messaggioGameOver(screen, score=0):
     mystr = str(score)
     assetGameOver_url = resource_path("Img/GameOver.png")
     gameOver = pygame.image.load(assetGameOver_url)
@@ -106,5 +164,5 @@ def messaggioGameOver(screen, score=0):
     text = FONT_OBJ.render(str(score), True, YELLOW)
     screen.blit(text, [240, 373])
 
-    return tastiEscSpace()
+    return tastiEscSpace()'''
 

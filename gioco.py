@@ -8,18 +8,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Larghezza e altezza finestera
-WIN_WIDTH = 500
-WIN_HEIGHT = 500
+WIN_WIDTH = 1000
+WIN_HEIGHT = 1000
 
 # Grandezza celle
 CELL_SIZE = 20
 
-# Velocita' del serpente (in frame per secondo)
-FPS = 10
-fps = pygame.time.Clock()
-
-def menu():
-    start(screen)
 
 def difficile_init():
     assetSound_url = resource_path("Sounds/difficileSottofondo.wav")
@@ -35,33 +29,11 @@ def facile_init():
 
     return FPS_LOCK, musica
 
-def comandi (verme):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                verme.muoviUp()
-            elif event.key == pygame.K_DOWN:
-                verme.muoviDown()
-            elif event.key == pygame.K_RIGHT:
-                verme.muoviRight()
-            elif event.key == pygame.K_LEFT:
-                verme.muoviLeft()
-    verme.muovi()
-    verme.popAppend()
-    gameover = verme.controlloBordi()
-    if not gameover:
-        gameover = verme.checkEatItSelf()
-
-    return gameover
-
 # Procedura main
 def main(FPS_LOCK, musica):
-
-    global FPS
-    global fps
+    # Velocita' del serpente (in frame per secondo)
+    FPS = 10
+    fps = pygame.time.Clock()
 
     # Oggetti
     verme = Verme(screen, CELL_SIZE)
@@ -83,7 +55,7 @@ def main(FPS_LOCK, musica):
         verme.disegna()
 
         # seleziona i comandi
-        gameover = comandi(verme)
+        gameover = verme.comandi()
 
         if verme.mangiaMele(mele.getX(), mele.getY()):
             mele.spawn()
@@ -95,7 +67,7 @@ def main(FPS_LOCK, musica):
         fps.tick(FPS)
 
     musica.stop()
-    return messaggioGameOver(screen, punteggio)
+    #return messaggioGameOver(screen, punteggio)
 
 if __name__ == "__main__":
 
@@ -103,16 +75,21 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     pygame.display.set_caption("pyWormy")
 
-    FPS_LOCK = None
-    musica = None
-    
-    if menu() == 1:
-        FPS_LOCK, musica = facile_init()
-    elif menu() == 2:
-        FPS_LOCK, musica = difficile_init()
 
-    finito = False
-    while not finito:
-        finito = main(FPS_LOCK, musica)
+    # FPS, musica default
+    FPS_LOCK, musica = difficile_init()
+
+    azione = startMenu(screen)
+    print(azione)
+    if azione == 'play':
+        finito = False
+        while not finito:
+            finito = main(FPS_LOCK, musica)
+    elif azione == 'opzioni':
+        pass
+    elif azione == 'creatori':
+        pass
+    elif azione == 'esci':
+        pass
 
     sys.exit()
