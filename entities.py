@@ -2,6 +2,7 @@ import pygame
 import random
 import os
 from control import *
+from pyGimager import *
 
 #Classe del serpente
 class Verme:

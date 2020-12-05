@@ -1,5 +1,6 @@
 from entities import *
 from control import *
+from pyGimager import *
 
 pygame.init()
 

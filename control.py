@@ -1,16 +1,9 @@
 import pygame
 import os
 import sys
+from pyGimager import *
 
 pygame.init()
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -37,13 +30,30 @@ assetSound_url = resource_path("Sounds/musica.wav")
 sound = pygame.mixer.Sound(assetSound_url)
 
 
-assetPlayBtn_url = resource_path("")
-assetOpzioniBtn_url = resource_path("")
-assetFacileBtn_url = resource_path("")
-assetDifficileBtn_url = resource_path("")
-assetCreatoriBtn_url = resource_path("")
-assetExitBtn_url = resource_path("")
+# play button
+btnPlay = pyGimager('Img\Buttons\Play.gif')
+btnPlay.deconstructGif('PlayButton', 'Img/Buttons/Play/')
+btnPlay.gifLoader('Img/Buttons/Play/')
 
+# options button
+btnOptions = pyGimager('Img\Buttons\Options.gif')
+btnOptions.deconstructGif('OptionsButton', 'Img/Buttons/Options/')
+btnOptions.gifLoader('Img/Buttons/Options/')
+
+# exit button
+btnExit = pyGimager('Img\Buttons\Exit.gif')
+btnExit.deconstructGif('ExitButton', 'Img/Buttons/Exit/')
+btnExit.gifLoader('Img/Buttons/Exit/')
+
+# easy button
+btnEasy = pyGimager('Img\Buttons\Easy.gif')
+btnEasy.deconstructGif('EasyButton', 'Img/Buttons/Easy/')
+btnEasy.gifLoader('Img/Buttons/Easy/')
+
+# hard button
+btnHard = pyGimager('Img\Buttons\Hard.gif')
+btnHard.deconstructGif('HardButton', 'Img/Buttons/Hard/')
+btnHard.gifLoader('Img/Buttons/Hard/')
 
 #Procedurea per stampre a schermo una scritta
 def disegnaTesto(text, font, color, screen, x, y):
@@ -69,14 +79,6 @@ def startMenu(screen):
     # azione fatta
     azione = 'nessuna'
 
-    # bottoni
-    btnPlay = pygame.Rect(350, 300, 300, 50)
-    btnOpzioni = pygame.Rect(350, 400, 300, 50)
-    btnCreatori = pygame.Rect(350, 500, 300, 50)
-    btnEsci = pygame.Rect(350, 600, 300, 50)
-
-
-
     # controllo azioni del menu
     finito = False
     click = False
@@ -87,27 +89,11 @@ def startMenu(screen):
         mouseX, mouseY = pygame.mouse.get_pos()
 
         # disegna pulsanti
-        pygame.draw.rect(screen, YELLOW, btnPlay)
-        pygame.draw.rect(screen, YELLOW, btnOpzioni)
-        pygame.draw.rect(screen, YELLOW, btnCreatori)
-        pygame.draw.rect(screen, YELLOW, btnEsci)
 
-        if btnPlay.collidepoint((mouseX, mouseY)):
-            if click:
-                azione = 'play'
-                finito = True
-        if btnOpzioni.collidepoint((mouseX,mouseY)):
-            if click:
-                azione = 'opzioni'
-                screen.blit(bgMenu)
-        if btnCreatori.collidepoint((mouseX,mouseY)):
-            if click:
-                azione = 'creatori'
-                finito = True
-        if btnEsci.collidepoint((mouseX, mouseY)):
-            if click:
-                azione = 'esci'
-                finito = True
+        
+        #btnPlay.gifPlayer(screen, (350,350), 500, (300,50))
+
+        
 
         click = False
         for event in pygame.event.get():
