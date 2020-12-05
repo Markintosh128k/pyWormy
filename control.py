@@ -16,10 +16,13 @@ def resource_path(relative_path):
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (217, 210, 57)
+PINK = (222, 50, 235)
 
 # Larghezza e altezza finestera
-WIN_WIDTH = 1000
-WIN_HEIGHT = 1000
+START_WIDHT = 120
+START_HEIGHT = 60
+END_WIDTH = 940
+END_HEIGHT = 800
 
 # Grandezza celle
 CELL_SIZE = 20
@@ -27,11 +30,20 @@ CELL_SIZE = 20
 # Dichiarazione Font
 assetFONT_OBJ_url = resource_path('SF_Pixelate.ttf')
 FONT_OBJ = pygame.font.Font(assetFONT_OBJ_url, 25)
-FONT_OBJ1 = pygame.font.Font(assetFONT_OBJ_url, 15)
+FONT_OBJ1 = pygame.font.Font(assetFONT_OBJ_url, 25)
 
 # Musica
 assetSound_url = resource_path("Sounds/musica.wav")
 sound = pygame.mixer.Sound(assetSound_url)
+
+
+assetPlayBtn_url = resource_path("")
+assetOpzioniBtn_url = resource_path("")
+assetFacileBtn_url = resource_path("")
+assetDifficileBtn_url = resource_path("")
+assetCreatoriBtn_url = resource_path("")
+assetExitBtn_url = resource_path("")
+
 
 #Procedurea per stampre a schermo una scritta
 def disegnaTesto(text, font, color, screen, x, y):
@@ -41,14 +53,14 @@ def disegnaTesto(text, font, color, screen, x, y):
     screen.blit(text_obj, text_rect)
 
 def score(screen, score):
-    text = FONT_OBJ1.render("Your Score: " + str(score), True, YELLOW)
-    screen.blit(text, [350, 10])
+    text = FONT_OBJ1.render(str(score), True, PINK)
+    screen.blit(text, [290, 831])
 
 def startMenu(screen):
     # caricamento immagine sfondo menu
     assetMenu_url = resource_path("Img/menu.png")
-    menu = pygame.image.load(assetMenu_url)
-    menu = pygame.transform.scale(menu, (1000, 1000))
+    bgMenu = pygame.image.load(assetMenu_url)
+    bgMenu = pygame.transform.scale(bgMenu, (1000, 900))
 
 
     # avvio musica
@@ -69,7 +81,7 @@ def startMenu(screen):
     finito = False
     click = False
     while not finito:
-        screen.blit(menu, (0, 0))
+        screen.blit(bgMenu, (0, 0))
 
         # prendi posizioni mouse
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -87,7 +99,7 @@ def startMenu(screen):
         if btnOpzioni.collidepoint((mouseX,mouseY)):
             if click:
                 azione = 'opzioni'
-                finito = True
+                screen.blit(bgMenu)
         if btnCreatori.collidepoint((mouseX,mouseY)):
             if click:
                 azione = 'creatori'
@@ -117,41 +129,13 @@ def startMenu(screen):
     return azione
 
 
-
-
-
-#Funzione per gestire i tasti premuti nel menu
-'''
-def tastiEscSpace():
-
-    finito = False  #finito gestisce il ciclo while riga 44
-    fineGame = False #fineGame = True il gico finisce, fineGame = Fale il gioco continua ancora
-    while not finito:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    finito = True
-                    fineGame = False
-                elif event.key == pygame.K_ESCAPE:
-                    fineGame = True
-                    pygame.quit()
-                    sys.exit()
-            elif event.type == pygame.QUIT:
-                fineGame = True
-                pygame.quit()
-                sys.exit()
-        pygame.display.update()
-
-    return fineGame'''
-
-
 # Procedura per diegnare la griglia
 def disegnaGriglia(screen):
-    for x in range(0, WIN_WIDTH, CELL_SIZE):
-        pygame.draw.line(screen, BLACK, (x, 0), (x, WIN_HEIGHT), 1)
+    for x in range(START_WIDHT, END_WIDTH, CELL_SIZE):
+        pygame.draw.line(screen, WHITE, (x, START_HEIGHT), (x, END_HEIGHT), 1)
 
-    for y in range(0, WIN_HEIGHT, CELL_SIZE):
-        pygame.draw.line(screen, BLACK, (0, y), (WIN_WIDTH, y), 1)
+    for y in range(START_HEIGHT, END_HEIGHT, CELL_SIZE):
+        pygame.draw.line(screen, WHITE, (START_WIDHT, y), (END_WIDTH, y), 1)
 
 
 # Funzione per stampare il messaggio di gameover con relativo punteggio

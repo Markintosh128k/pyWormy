@@ -9,7 +9,13 @@ BLACK = (0, 0, 0)
 
 # Larghezza e altezza finestera
 WIN_WIDTH = 1000
-WIN_HEIGHT = 1000
+WIN_HEIGHT = 900
+
+# Griglia
+START_WIDHT = 100
+START_HEIGHT = 40
+END_WIDTH = 940
+END_HEIGHT = 800
 
 # Grandezza celle
 CELL_SIZE = 20
@@ -36,20 +42,21 @@ def main(FPS_LOCK, musica):
     fps = pygame.time.Clock()
 
     # Oggetti
-    verme = Verme(screen, CELL_SIZE)
-    mele = Mela(screen, CELL_SIZE)
+    verme = Verme(screen, CELL_SIZE, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT)
+    mele = Mela(screen, CELL_SIZE, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT)
 
     # Inizializzazione varibili utili
     gameover = False
-    assetSfondo = resource_path("Img/background1.png")
-    sfondo = pygame.image.load(assetSfondo)
+    assetSfondo = resource_path("Img/background.png")
+    bg = pygame.image.load(assetSfondo)
+    bg = pygame.transform.scale(bg, (1000, 900))
     punteggio = 0
 
     mele.spawn()
     musica.play(-1)
     while not gameover:
-        screen.blit(sfondo, (0, 0))
-        # disegnaGriglia(screen)
+        screen.blit(bg, (0, 0))
+        #disegnaGriglia(screen)
         score(screen, punteggio)
         mele.disegna()
         verme.disegna()

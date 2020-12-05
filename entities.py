@@ -6,12 +6,12 @@ from control import *
 #Classe del serpente
 class Verme:
     #Costruttore
-    def __init__(self, screen, pixel):
+    def __init__(self, screen, pixel, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT):
         self.screen = screen
 
         # posizioni x ed y attuali del verme
-        self.x = 240
-        self.y = 240
+        self.x = 400
+        self.y = 460
 
         # variabile che ci dice la direzione del verme
         self.direzione = 1
@@ -45,19 +45,25 @@ class Verme:
         # mangiato = True se ha mangiato la mela, mangiato = False se non ha ancora mangiato la mela
         self.mangiato = False
 
+        # grandezza della griglia
+        self.startWidht = START_WIDHT
+        self.startHeight = START_HEIGHT
+        self.endWidht = END_WIDTH
+        self.endHeight = END_HEIGHT
+
 
     # Funzione che restituisce se il verme va fuori dai bordi
     def controlloBordi(self):
         finito = False
         x = self.vermeCord[-1][0]
         y = self.vermeCord[-1][1]
-        if x >= 500:
+        if x >= self.endWidht:
             finito = True
-        if x <= 0:
+        if x <= self.startWidht:
             finito = True
-        if y >= 500:
+        if y >= self.endHeight:
             finito = True
-        if y <= 0:
+        if y <= self.startHeight:
             finito = True
 
         return finito
@@ -168,13 +174,18 @@ class Verme:
 
 #Classe mela
 class Mela:
-
     # Costruttore
-    def __init__(self, screen, pixel):
+    def __init__(self, screen, pixel, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT):
         self.screen = screen
 
         #grandezza
         self.size = pixel
+
+        #grandezza della griglia
+        self.startWidht = START_WIDHT / 10
+        self.startHeight = START_HEIGHT / 10
+        self.endWidht = END_WIDTH / 10
+        self.endHeight = END_HEIGHT / 10
 
         # prende l'immagine della mela dalla cartella
         self.melaList = ["Img/Sprites/Sprites3/Mela/brackets.png", "Img/Sprites/Sprites3/Mela/cmd.png", "Img/Sprites/Sprites3/Mela/ciclofor.png", "Img/Sprites/Sprites3/Mela/puntoevirgola.png",]
@@ -183,11 +194,8 @@ class Mela:
         n = random.randint(0, len(self.melaList)-1)
         assetMela_url = resource_path(self.melaList[n])
         self.imgLoad = pygame.image.load(assetMela_url)
-        
-        #posizioni x e y attuali della mela
-        self.x = 0
-        self.y = 0
-       
+
+        self.spawn()
 
     # Restituisce il valore della x
     def getX(self):
@@ -199,12 +207,12 @@ class Mela:
 
     # Funzione che restituisce la x in una posizione random
     def spawn(self):
-        n = random.randint(4, 46) * 10
+        n = random.randint(self.startWidht + 2, self.endWidht - 2) * 10
         if n % self.size != 0:
                 n += 10
         self.x = n
 
-        n = random.randint(4, 46) * 10
+        n = random.randint(self.startHeight + 2, self.endHeight - 2) * 10
         if n % self.size != 0:
             n += 10
         self.y = n
