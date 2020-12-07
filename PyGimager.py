@@ -28,9 +28,6 @@ class PyGimager:
         self.frames = []
 
         self.assetFrames_url = []
-       
-    def getAssetFramesUrl(self):
-        return self.assetFrames_url
 
     # This method divides all the frames of the gif in a .png file (in a desired folder)
     def deconstructGif(self, mainName='decImage', savePath='LOCAL'):
@@ -82,5 +79,5 @@ class PyGimager:
             pygame.time.wait(wait)
             pygame.display.update()
 
-    def getFirstFrame(self):
-        return self.frames[0]
+    def getFrame(self, index):
+        return self.frames[index]

@@ -32,7 +32,6 @@ class Verme:
         self.vermeCord = [(self.x - 40, self.y), (self.x - 20, self.y), (self.x, self.y)]
         self.vermeDir = [self.direzione, self.direzione, self.direzione]
 
-
         # effetto sonoro, si attiva quando una mela viene mangiata
         assetSuono_url = resource_path("Sounds/slurp.wav")
         self.sound = pygame.mixer.Sound(assetSuono_url)
