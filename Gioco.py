@@ -10,7 +10,7 @@ BLACK = (0, 0, 0)
 WIN_WIDTH = 1000
 WIN_HEIGHT = 900
 
-# Griglia
+# Posizioni da dove parte la griglia
 START_WIDHT = 100
 START_HEIGHT = 40
 END_WIDTH = 940
@@ -19,20 +19,6 @@ END_HEIGHT = 800
 # Grandezza celle
 CELL_SIZE = 20
 
-
-def difficile_init():
-    assetSound_url = resource_path("Sounds/difficileSottofondo.wav")
-    musica = pygame.mixer.Sound(assetSound_url)
-    FPS_LOCK = 30
-
-    return FPS_LOCK, musica
-
-def facile_init():
-    assetSound_url = resource_path("Sounds/facileSottofondo.wav")
-    musica = pygame.mixer.Sound(assetSound_url)
-    FPS_LOCK = 10
-
-    return FPS_LOCK, musica
 
 # Procedura main
 def main(FPS_LOCK, musica):
@@ -85,17 +71,8 @@ if __name__ == "__main__":
     # FPS, musica default
     FPS_LOCK, musica = difficile_init()
 
-    azione = startMenu(screen)
-    print(azione)
-    if azione == 'play':
-        finito = False
-        while not finito:
-            finito = main(FPS_LOCK, musica)
-    elif azione == 'opzioni':
-        pass
-    elif azione == 'creatori':
-        pass
-    elif azione == 'esci':
-        pass
-
+    startMenu(screen)
+    finito = False
+    while not finito:
+        finito = main(FPS_LOCK, musica)
     sys.exit()

@@ -71,13 +71,12 @@ class PyGimager:
                     self.frames.append(frame) 
        
 
-    def gifPlayer(self, screen, position=def_position, wait=500, scaling=def_scaling):
+    def gifPlayer(self, screen, position=def_position, wait=500):
         for frame in self.frames:
             AnimatedSprite = frame
-            AnimatedSprite = pygame.transform.scale(AnimatedSprite, scaling)
             screen.blit(AnimatedSprite, position)
             pygame.time.wait(wait)
             pygame.display.update()
 
-    def getFrame(self, index):
-        return self.frames[index]
+    def getFirstFrame(self):
+        return self.frames[-1]

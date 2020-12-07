@@ -1,5 +1,4 @@
-from PyGimager import *
-
+from Menu import *
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -26,48 +25,64 @@ assetSound_url = resource_path("Sounds/musica.wav")
 sound = pygame.mixer.Sound(assetSound_url)
 
 
-# play button
-btnPlay = PyGimager('Img/Buttons/Play.gif')
-btnPlay.deconstructGif('PlayButton', 'Img/Buttons/Play/')
-btnPlay.gifLoader('Img/Buttons/Play/')
+btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Credits.gif', 'Img/Buttons/Exit.gif']
+saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'), ('CreditsButton', 'Img/Buttons/Credits/'), ('ExitButton', 'Img/Buttons/Exit/')]
 
-# options button
-btnOptions = PyGimager('Img/Buttons/Options.gif')
-btnOptions.deconstructGif('OptionsButton', 'Img/Buttons/Options/')
-btnOptions.gifLoader('Img/Buttons/Options/')
+btnOptionsPathList = ['Img/Buttons/Easy.gif', 'Img/Buttons/Hard.gif']
+saveOptionsPathList = [('EasyButton', 'Img/Buttons/Easy/'), ('HardButton', 'Img/Buttons/Hard/')]
 
-# exit button
-btnExit = PyGimager('Img/Buttons/Exit.gif')
-btnExit.deconstructGif('ExitButton', 'Img/Buttons/Exit/')
-btnExit.gifLoader('Img/Buttons/Exit/')
-
-# easy button
-btnEasy = PyGimager('Img/Buttons/Easy.gif')
-btnEasy.deconstructGif('EasyButton', 'Img/Buttons/Easy/')
-btnEasy.gifLoader('Img/Buttons/Easy/')
-
-# hard button
-btnHard = PyGimager('Img/Buttons/Hard.gif')
-btnHard.deconstructGif('HardButton', 'Img/Buttons/Hard/')
-btnHard.gifLoader('Img/Buttons/Hard/')
-
-#Procedurea per stampre a schermo una scritta
-def disegnaTesto(text, font, color, screen, x, y):
-    text_obj = font.reder(text, 1, color)
-    text_rect = text_obj.get_rect()
-    text_rect.topleft = (x, y)
-    screen.blit(text_obj, text_rect)
 
 def score(screen, score):
     text = FONT_OBJ1.render(str(score), True, PINK)
     screen.blit(text, [290, 831])
 
 def startMenu(screen):
-    # caricamento immagine sfondo menu
-    assetMenu_url = resource_path("Img/menu.png")
-    bgMenu = pygame.image.load(assetMenu_url)
-    bgMenu = pygame.transform.scale(bgMenu, (1000, 900))
+    # Setta di default la modalità facile
+    FPS_LOCK, musica = facile_init()
 
+    # caricamento immagine sfondo menù
+    assetMenu_url = resource_path("Img/startMenu.png")
+    bgMenu = pygame.image.load(assetMenu_url)
+
+    # Avvio musica
+    sound.play(-1)
+
+    # Caricamento immagini bottoni
+    mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, bgMenu)
+    bottonePremuto = mainMenu.start()
+
+    finito = False
+    # MAIN MENU
+    while not finito:
+        if bottonePremuto == 0:     # PLAY
+            finito = True
+
+        elif bottonePremuto == 1:   # OPTIONS
+            optionMenu = Bottoni(screen, 475, 300, btnOptionsPathList, saveOptionsPathList, bgMenu)
+            bottonePremuto = optionMenu.start()
+
+            # scelta modalita: easy/hard
+            if bottonePremuto == 0:
+                FPS_LOCK, musica = facile_init()
+
+            elif bottonePremuto == 1:
+                FPS_LOCK, musica = difficile_init()
+
+            bottonePremuto = mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, bgMenu)
+
+
+        elif bottonePremuto == 2:   # CREDITS
+            
+            bottonePremuto = mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, bgMenu)
+
+        else:                       # EXIT
+            finito = False
+            pygame.quit()
+            sys.exit()
+
+    sound.stop()
+
+    return FPS_LOCK, musica
 
 # Procedura per diegnare la griglia
 def disegnaGriglia(screen):
@@ -90,3 +105,16 @@ def disegnaGriglia(screen):
 
     return tastiEscSpace()'''
 
+def difficile_init():
+    assetSound_url = resource_path("Sounds/difficileSottofondo.wav")
+    musica = pygame.mixer.Sound(assetSound_url)
+    FPS_LOCK = 30
+
+    return FPS_LOCK, musica
+
+def facile_init():
+    assetSound_url = resource_path("Sounds/facileSottofondo.wav")
+    musica = pygame.mixer.Sound(assetSound_url)
+    FPS_LOCK = 10
+
+    return FPS_LOCK, musica
