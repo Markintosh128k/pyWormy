@@ -1,7 +1,10 @@
 from PIL import Image
+import sys
 import os
-from os import path
 import pygame
+
+pygame.init()
+
 
  # Default parameters for GifPlater
 def_filling = (255, 255, 255)
@@ -16,7 +19,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-class pyGimager:
+class PyGimager:
     def __init__(self, gif):
         # Loading the desired gif image
         self.gif = Image.open(gif)
@@ -70,9 +73,7 @@ class pyGimager:
                     frame = pygame.image.load(loadPath+image)
                     self.frames.append(frame) 
        
-       
-        
-                   
+
     def gifPlayer(self, screen, position=def_position, wait=500, scaling=def_scaling):
         for frame in self.frames:
             AnimatedSprite = frame

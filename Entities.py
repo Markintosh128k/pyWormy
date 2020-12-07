@@ -1,8 +1,9 @@
 import pygame
 import random
-import os
-from control import *
-from pyGimager import *
+from Control import *
+from PyGimager import resource_path
+
+pygame.init()
 
 #Classe del serpente
 class Verme:

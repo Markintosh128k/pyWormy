@@ -1,9 +1,5 @@
-import pygame
-import os
-import sys
-from pyGimager import *
+from PyGimager import *
 
-pygame.init()
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -31,27 +27,27 @@ sound = pygame.mixer.Sound(assetSound_url)
 
 
 # play button
-btnPlay = pyGimager('Img\Buttons\Play.gif')
+btnPlay = PyGimager('Img/Buttons/Play.gif')
 btnPlay.deconstructGif('PlayButton', 'Img/Buttons/Play/')
 btnPlay.gifLoader('Img/Buttons/Play/')
 
 # options button
-btnOptions = pyGimager('Img\Buttons\Options.gif')
+btnOptions = PyGimager('Img/Buttons/Options.gif')
 btnOptions.deconstructGif('OptionsButton', 'Img/Buttons/Options/')
 btnOptions.gifLoader('Img/Buttons/Options/')
 
 # exit button
-btnExit = pyGimager('Img\Buttons\Exit.gif')
+btnExit = PyGimager('Img/Buttons/Exit.gif')
 btnExit.deconstructGif('ExitButton', 'Img/Buttons/Exit/')
 btnExit.gifLoader('Img/Buttons/Exit/')
 
 # easy button
-btnEasy = pyGimager('Img\Buttons\Easy.gif')
+btnEasy = PyGimager('Img/Buttons/Easy.gif')
 btnEasy.deconstructGif('EasyButton', 'Img/Buttons/Easy/')
 btnEasy.gifLoader('Img/Buttons/Easy/')
 
 # hard button
-btnHard = pyGimager('Img\Buttons\Hard.gif')
+btnHard = PyGimager('Img/Buttons/Hard.gif')
 btnHard.deconstructGif('HardButton', 'Img/Buttons/Hard/')
 btnHard.gifLoader('Img/Buttons/Hard/')
 
@@ -71,48 +67,6 @@ def startMenu(screen):
     assetMenu_url = resource_path("Img/menu.png")
     bgMenu = pygame.image.load(assetMenu_url)
     bgMenu = pygame.transform.scale(bgMenu, (1000, 900))
-
-
-    # avvio musica
-    sound.play(-1)
-
-    # azione fatta
-    azione = 'nessuna'
-
-    # controllo azioni del menu
-    finito = False
-    click = False
-    while not finito:
-        screen.blit(bgMenu, (0, 0))
-
-        # prendi posizioni mouse
-        mouseX, mouseY = pygame.mouse.get_pos()
-
-        # disegna pulsanti
-
-        
-        #btnPlay.gifPlayer(screen, (350,350), 500, (300,50))
-
-        
-
-        click = False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                azione = 'esci'
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    azione = 'esci'
-                    pygame.quit()
-                    sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    click = True
-        pygame.display.update()
-
-    pygame.mixer.Sound.stop(sound)
-    return azione
 
 
 # Procedura per diegnare la griglia

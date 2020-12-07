@@ -1,8 +1,6 @@
-from entities import *
-from control import *
-from pyGimager import *
-
-pygame.init()
+from Entities import *
+from Control import *
+from PyGimager import *
 
 # Colori utili
 WHITE = (255, 255, 255)
