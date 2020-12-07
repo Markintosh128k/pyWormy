@@ -25,8 +25,8 @@ assetSound_url = resource_path("Sounds/musica.wav")
 sound = pygame.mixer.Sound(assetSound_url)
 
 
-btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Credits.gif', 'Img/Buttons/Exit.gif']
-saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'), ('CreditsButton', 'Img/Buttons/Credits/'), ('ExitButton', 'Img/Buttons/Exit/')]
+btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Exit.gif']
+saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'),  ('ExitButton', 'Img/Buttons/Exit/')]
 
 btnOptionsPathList = ['Img/Buttons/Easy.gif', 'Img/Buttons/Hard.gif']
 saveOptionsPathList = [('EasyButton', 'Img/Buttons/Easy/'), ('HardButton', 'Img/Buttons/Hard/')]
@@ -70,12 +70,7 @@ def startMenu(screen):
 
             bottonePremuto = mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, bgMenu)
 
-
-        elif bottonePremuto == 2:   # CREDITS
-            
-            bottonePremuto = mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, bgMenu)
-
-        else:                       # EXIT
+        elif bottonePremuto == 2:                       # EXIT
             finito = False
             pygame.quit()
             sys.exit()
