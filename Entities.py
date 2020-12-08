@@ -160,7 +160,7 @@ class Verme:
         if self.x == mx and self.y == my:
             self.vermeCord.append((self.x, self.y))
             self.vermeImg.append(self.imgTesta)
-            self.vermeImg[0] = self.imgCorpo
+            self.vermeImg[-2] = self.imgCorpo
             self.mangiato = True
             self.sound.play()
         else:
@@ -208,12 +208,12 @@ class Mela:
 
     # Funzione che restituisce la x in una posizione random
     def spawn(self):
-        n = random.randint(self.startWidht + 2, self.endWidht - 2) * 10
+        n = random.randint(self.startWidht + 4, self.endWidht - 4) * 10
         if n % self.size != 0:
                 n += 10
         self.x = n
 
-        n = random.randint(self.startHeight + 2, self.endHeight - 2) * 10
+        n = random.randint(self.startHeight + 4, self.endHeight - 4) * 10
         if n % self.size != 0:
             n += 10
         self.y = n
