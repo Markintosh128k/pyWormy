@@ -1,1 +1,1 @@
-[('Img/Buttons/Hard/HardButton0','Img/Buttons/Hard/'),('Img/Buttons/Hard/HardButton1','Img/Buttons/Hard/'),]
+[('Img/Buttons/Exit/ExitButton0','Img/Buttons/Exit/'),('Img/Buttons/Exit/ExitButton1','Img/Buttons/Exit/'),]

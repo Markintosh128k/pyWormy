@@ -81,21 +81,18 @@ class Verme:
         if self.direzione != 2:
             self.change_x = 0
             self.change_y = - self.size
-            self.direzione = 0
 
     # Funzione per cambaire direzione
     def muoviRight(self):
         if self.direzione != 3:
             self.change_x = self.size
             self.change_y = 0
-            self.direzione = 1
 
     # Funzione per cambaire direzione
     def muoviLeft(self):
         if self.direzione != 1:
             self.change_y = 0
             self.change_x = - self.size
-            self.direzione = 3
 
     def muovi(self):
         self.x += self.change_x
@@ -103,12 +100,16 @@ class Verme:
 
     def popAppend(self):
         # aggiungo le nuove coordinate
+        
         self.vermeCord.append((self.x, self.y))
         self.vermeCord.pop(0)
+
+        self.calcolaDirezione()
 
         # aggiungo la nuova diezione
         self.vermeDir.append(self.direzione)
         self.vermeDir.pop(0)
+        
 
         # assegno le immagini
         assetTesta_url = resource_path(self.testaList[self.vermeDir[-1]])
@@ -117,10 +118,24 @@ class Verme:
         # cambiamo le immgaini nella lista
         self.vermeImg[-1] = self.imgTesta
 
+    def calcolaDirezione(self):
+        if self.vermeCord[-1][0] > self.vermeCord[-2][0]:
+            self.direzione = 1
+        elif self.vermeCord[-1][0] < self.vermeCord[-2][0]:
+            self.direzione = 3
+
+        if self.vermeCord[-1][1] > self.vermeCord[-2][1]:
+            self.direzione = 2
+        elif self.vermeCord[-1][1] < self.vermeCord[-2][1]:
+            self.direzione = 0
+         
+       
+
+
     # Funzione che controlla se il serpente ha mangiato se stesso
     def checkEatItSelf(self):
         finto = False
-        for i in range(len(self.vermeCord) - 1):
+        for i in range(len(self.vermeCord) - 3):
             if self.vermeCord[-1] == self.vermeCord[i]:
                 finto = True
 
@@ -189,7 +204,7 @@ class Mela:
         self.endHeight = END_HEIGHT / 10
 
         # prende l'immagine della mela dalla cartella
-        self.melaList = ["Img/Sprites/Sprites3/Mela/brackets.png", "Img/Sprites/Sprites3/Mela/cmd.png", "Img/Sprites/Sprites3/Mela/ciclofor.png", "Img/Sprites/Sprites3/Mela/puntoevirgola.png",]
+        self.melaList = ["Img/Sprites/Sprites3/Mela/C.png", "Img/Sprites/Sprites3/Mela/JS.png", "Img/Sprites/Sprites3/Mela/Ruby.png", "Img/Sprites/Sprites3/Mela/PHP.png",]
        
         # Caricamento dello sprite
         n = random.choice(self.melaList)

@@ -78,4 +78,4 @@ class PyGimager:
             pygame.display.update()
 
     def getFirstFrame(self):
-        return self.frames[-1]
+        return self.frames[0]

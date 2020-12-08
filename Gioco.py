@@ -21,12 +21,19 @@ END_HEIGHT = 800
 # Grandezza celle
 CELL_SIZE = 20
 
+#COLORI
+PINK = (222, 50, 235)
+
 # Percorsi gif
 btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Exit.gif']
 saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'), ('ExitButton', 'Img/Buttons/Exit/')]
 
 btnOptionsPathList = ['Img/Buttons/Easy.gif', 'Img/Buttons/Hard.gif']
 saveOptionsPathList = [('EasyButton', 'Img/Buttons/Easy/'), ('HardButton', 'Img/Buttons/Hard/')]
+
+
+btnGameOverPathlist = ['Img/Buttons/BackToMenu.gif', 'Img/Buttons/Exit.gif']
+saveGameOverPathList = [('BacktoMenuButton', 'Img/Buttons/BackToMenu/'), ('ExitButton', 'Img/Buttons/Exit/')]
 
 # caricamento immagine sfondo menù
 assetMenu_url = resource_path("Img/startMenu.png")
@@ -41,15 +48,17 @@ musicaHard = pygame.mixer.Sound(assetHardSound_url)
 assetEasySound_url = resource_path("Sounds/facileSottofondo.wav")
 musicaEasy = pygame.mixer.Sound(assetEasySound_url)
 
+# Font
+assetFONT_OBJ_url = resource_path('SF_Pixelate.ttf')
+FONT_OBJ = pygame.font.Font(assetFONT_OBJ_url, 70)
 
 # Creazione menu options
 def options():
-    optionsMenu = Bottoni(screen, 475, 300, btnOptionsPathList, saveOptionsPathList, sfondoMenu)
+    optionsMenu = Bottoni(screen, 480, 300, btnOptionsPathList, saveOptionsPathList, sfondoMenu)
 
     finito = False
     while not finito:
         optionsMenu.start()
-
         if optionsMenu.getBottonePremuto() == 0:
             velocitaMAX = 15
             musica = musicaEasy
@@ -63,10 +72,8 @@ def options():
     return velocitaMAX, musica
 
 
-'''# Creazione menu gameover
-def messaggioGameOver(screen, score=0):
-    mystr = str(score)
-
+# Creazione menu gameover
+def messaggioGameOver(screen, punteggio):
     assetgameOverSound_url = resource_path("Sounds/lose.wav")
     gameOverSound = pygame.mixer.Sound(assetgameOverSound_url)
 
@@ -74,26 +81,20 @@ def messaggioGameOver(screen, score=0):
     gameOverImg = pygame.image.load(assetGameOverImg_url)
 
     gameOverSound.play()
-    #gameoverMenu = Bottoni(screen, 475, 300,)
-
+    gameoverMenu = Bottoni(screen, 480, 600,btnGameOverPathlist, saveGameOverPathList, gameOverImg)
     scelta = ''
     finito = False
     while not finito:
-        gameoverMenu.start()
-
+        gameoverMenu.start(1, punteggio, FONT_OBJ, 540, 414, YELLOW)
         if gameoverMenu.getBottonePremuto() == 0: # andare al menu principlale
-            pass
             scelta = 'mainMenu'
             finito = True
-        elif gameoverMenu.getBottonePremuto() == 1 # exit
+        elif gameoverMenu.getBottonePremuto() == 1: # exit
             scelta = 'exit'
             finito = True
+        pygame.display.update()
 
-    screen.blit(gameOverImg, (0, 0))
-    text = FONT_OBJ.render(str(score), True, YELLOW)
-    screen.blit(text, [475, 500])
-
-    return scelta'''
+    return scelta
 
 
 # gioco
@@ -120,13 +121,13 @@ def game(velocitaMAX, musica):
         melaY = mele.getY()
         screen.blit(bg, (0, 0))
         # disegnaGriglia(screen)
-        score(screen, punteggio)
+        score(screen, punteggio, 290, 831)
         mele.disegna()
         verme.disegna()
 
         # seleziona i comandi
         gameover = verme.comandi()
-
+        
         if verme.mangiaMele(melaX, melaY):
             mele.spawn()
             punteggio += 1
@@ -137,7 +138,7 @@ def game(velocitaMAX, musica):
         fps.tick(velocita)
 
     musica.stop()
-    # return messaggioGameOver(screen, punteggio)
+    return messaggioGameOver(screen, punteggio)
 
 
 if __name__ == "__main__":
@@ -151,29 +152,30 @@ if __name__ == "__main__":
     musica = musicaEasy
 
     # Creazione menu principlae
-    mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, sfondoMenu)
+    mainMenu = Bottoni(screen, 480, 300, btnMainPathList, saveMainPathList, sfondoMenu)
 
     finito = False
     scelta = ''
 
     musicaMenu.play(-1)
+
     while not finito:
         mainMenu.start()
-
         if mainMenu.getBottonePremuto() == 0:
             musicaMenu.stop()
             gameover = False
             while not gameover:
-                game(velocitaMAX, musica)
-                '''if scelta == 'exit':
+                if game(velocitaMAX, musica) == 'exit':
                     finito = True
-                gameover = True'''
+                gameover = True
 
         elif mainMenu.getBottonePremuto() == 1:
             velocitaMAX, musica = options()
 
         elif mainMenu.getBottonePremuto() == 2:
             finito = True
+        pygame.display.update()
+
 
     musicaMenu.stop()
     pygame.quit()

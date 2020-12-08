@@ -1,4 +1,5 @@
 from Bottoni import *
+import pygame
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -18,12 +19,11 @@ CELL_SIZE = 20
 # Dichiarazione Font
 assetFONT_OBJ_url = resource_path('SF_Pixelate.ttf')
 FONT_OBJ = pygame.font.Font(assetFONT_OBJ_url, 25)
-FONT_OBJ1 = pygame.font.Font(assetFONT_OBJ_url, 25)
 
 
-def score(screen, score):
-    text = FONT_OBJ1.render(str(score), True, PINK)
-    screen.blit(text, [290, 831])
+def score(screen, score, x ,y):
+    text = FONT_OBJ.render(str(score), True, PINK)
+    screen.blit(text, [x, y])
 
 
 # Procedura per diegnare la griglia
@@ -35,14 +35,3 @@ def disegnaGriglia(screen):
         pygame.draw.line(screen, WHITE, (START_WIDHT, y), (END_WIDTH, y), 1)
 
 
-# Funzione per stampare il messaggio di gameover con relativo punteggio
-'''def messaggioGameOver(screen, score=0):
-    mystr = str(score)
-    assetGameOver_url = resource_path("Img/GameOver.png")
-    gameOver = pygame.image.load(assetGameOver_url)
-
-    screen.blit(gameOver, (0, 0))
-    text = FONT_OBJ.render(str(score), True, YELLOW)
-    screen.blit(text, [240, 373])
-
-    return tastiEscSpace()'''
