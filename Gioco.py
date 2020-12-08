@@ -1,6 +1,8 @@
 from Entities import *
 from Control import *
 from PyGimager import *
+import pygame
+import sys
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -19,11 +21,85 @@ END_HEIGHT = 800
 # Grandezza celle
 CELL_SIZE = 20
 
+# Percorsi gif
+btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Exit.gif']
+saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'), ('ExitButton', 'Img/Buttons/Exit/')]
 
-# Procedura main
-def main(FPS_LOCK, musica):
+btnOptionsPathList = ['Img/Buttons/Easy.gif', 'Img/Buttons/Hard.gif']
+saveOptionsPathList = [('EasyButton', 'Img/Buttons/Easy/'), ('HardButton', 'Img/Buttons/Hard/')]
+
+# caricamento immagine sfondo menù
+assetMenu_url = resource_path("Img/startMenu.png")
+sfondoMenu = pygame.image.load(assetMenu_url)
+assetMenuSound_url = resource_path("Sounds/musica.wav")
+musicaMenu = pygame.mixer.Sound(assetMenuSound_url)
+
+# caricamento delle musiche
+assetHardSound_url = resource_path("Sounds/difficileSottofondo.wav")
+musicaHard = pygame.mixer.Sound(assetHardSound_url)
+
+assetEasySound_url = resource_path("Sounds/facileSottofondo.wav")
+musicaEasy = pygame.mixer.Sound(assetEasySound_url)
+
+
+# Creazione menu options
+def options():
+    optionsMenu = Bottoni(screen, 475, 300, btnOptionsPathList, saveOptionsPathList, sfondoMenu)
+
+    finito = False
+    while not finito:
+        optionsMenu.start()
+
+        if optionsMenu.getBottonePremuto() == 0:
+            velocitaMAX = 15
+            musica = musicaEasy
+            finito = True
+
+        elif optionsMenu.getBottonePremuto() == 1:
+            velocitaMAX = 40
+            musica = musicaHard
+            finito = True
+
+    return velocitaMAX, musica
+
+
+'''# Creazione menu gameover
+def messaggioGameOver(screen, score=0):
+    mystr = str(score)
+
+    assetgameOverSound_url = resource_path("Sounds/lose.wav")
+    gameOverSound = pygame.mixer.Sound(assetgameOverSound_url)
+
+    assetGameOverImg_url = resource_path("Img/GameOver.png")
+    gameOverImg = pygame.image.load(assetGameOverImg_url)
+
+    gameOverSound.play()
+    #gameoverMenu = Bottoni(screen, 475, 300,)
+
+    scelta = ''
+    finito = False
+    while not finito:
+        gameoverMenu.start()
+
+        if gameoverMenu.getBottonePremuto() == 0: # andare al menu principlale
+            pass
+            scelta = 'mainMenu'
+            finito = True
+        elif gameoverMenu.getBottonePremuto() == 1 # exit
+            scelta = 'exit'
+            finito = True
+
+    screen.blit(gameOverImg, (0, 0))
+    text = FONT_OBJ.render(str(score), True, YELLOW)
+    screen.blit(text, [475, 500])
+
+    return scelta'''
+
+
+# gioco
+def game(velocitaMAX, musica):
     # Velocita' del serpente (in frame per secondo)
-    FPS = 10
+    velocita = 10
     fps = pygame.time.Clock()
 
     # Oggetti
@@ -40,8 +116,10 @@ def main(FPS_LOCK, musica):
     mele.spawn()
     musica.play(-1)
     while not gameover:
+        melaX = mele.getX()
+        melaY = mele.getY()
         screen.blit(bg, (0, 0))
-        #disegnaGriglia(screen)
+        # disegnaGriglia(screen)
         score(screen, punteggio)
         mele.disegna()
         verme.disegna()
@@ -49,17 +127,18 @@ def main(FPS_LOCK, musica):
         # seleziona i comandi
         gameover = verme.comandi()
 
-        if verme.mangiaMele(mele.getX(), mele.getY()):
+        if verme.mangiaMele(melaX, melaY):
             mele.spawn()
             punteggio += 1
-            if FPS <= FPS_LOCK:
-                FPS += 1
+            if velocita <= velocitaMAX:
+                velocita += 1
 
         pygame.display.update()
-        fps.tick(FPS)
+        fps.tick(velocita)
 
     musica.stop()
-    #return messaggioGameOver(screen, punteggio)
+    # return messaggioGameOver(screen, punteggio)
+
 
 if __name__ == "__main__":
 
@@ -67,12 +146,35 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     pygame.display.set_caption("pyWormy")
 
+    # Set del modalità default
+    velocitaMAX = 15
+    musica = musicaEasy
 
-    # FPS, musica default
-    FPS_LOCK, musica = difficile_init()
+    # Creazione menu principlae
+    mainMenu = Bottoni(screen, 475, 300, btnMainPathList, saveMainPathList, sfondoMenu)
 
-    startMenu(screen)
     finito = False
+    scelta = ''
+
+    musicaMenu.play(-1)
     while not finito:
-        finito = main(FPS_LOCK, musica)
+        mainMenu.start()
+
+        if mainMenu.getBottonePremuto() == 0:
+            musicaMenu.stop()
+            gameover = False
+            while not gameover:
+                game(velocitaMAX, musica)
+                '''if scelta == 'exit':
+                    finito = True
+                gameover = True'''
+
+        elif mainMenu.getBottonePremuto() == 1:
+            velocitaMAX, musica = options()
+
+        elif mainMenu.getBottonePremuto() == 2:
+            finito = True
+
+    musicaMenu.stop()
+    pygame.quit()
     sys.exit()

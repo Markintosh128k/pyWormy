@@ -1,7 +1,7 @@
-import pygame
-import random
 from Control import *
 from PyGimager import resource_path
+import pygame
+import random
 
 pygame.init()
 
@@ -160,7 +160,7 @@ class Verme:
         if self.x == mx and self.y == my:
             self.vermeCord.append((self.x, self.y))
             self.vermeImg.append(self.imgTesta)
-            self.vermeImg[-2] = self.imgCorpo
+            self.vermeImg[0] = self.imgCorpo
             self.mangiato = True
             self.sound.play()
         else:
@@ -192,8 +192,8 @@ class Mela:
         self.melaList = ["Img/Sprites/Sprites3/Mela/brackets.png", "Img/Sprites/Sprites3/Mela/cmd.png", "Img/Sprites/Sprites3/Mela/ciclofor.png", "Img/Sprites/Sprites3/Mela/puntoevirgola.png",]
        
         # Caricamento dello sprite
-        n = random.randint(0, len(self.melaList)-1)
-        assetMela_url = resource_path(self.melaList[n])
+        n = random.choice(self.melaList)
+        assetMela_url = resource_path(n)
         self.imgLoad = pygame.image.load(assetMela_url)
 
         self.spawn()
@@ -219,8 +219,8 @@ class Mela:
         self.y = n
 
         # Caricamento dello sprite
-        n = random.randint(0, len(self.melaList)-1)
-        assetMela_url = resource_path(self.melaList[n])
+        n = random.choice(self.melaList)
+        assetMela_url = resource_path(n)
         self.imgLoad = pygame.image.load(assetMela_url)
 
     # Disegna la mela

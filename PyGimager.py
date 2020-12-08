@@ -5,11 +5,11 @@ import pygame
 
 pygame.init()
 
-
- # Default parameters for GifPlater
+# Default parameters for GifPlater
 def_filling = (255, 255, 255)
 def_position = (0, 0)
 def_scaling = (100, 100)
+
 
 def resource_path(relative_path):
     try:
@@ -18,6 +18,7 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
 
 class PyGimager:
     def __init__(self, gif):
@@ -47,15 +48,14 @@ class PyGimager:
         for i in range(self.gif.n_frames):
             self.gif.seek(i)
             if not local:
-                self.gif.save(savePath+mainName+'{}.png'.format(i), 'PNG')
-                f.write("('{}{}','{}'),".format(savePath+mainName, i, savePath))
-                
+                self.gif.save(savePath + mainName + '{}.png'.format(i), 'PNG')
+                f.write("('{}{}','{}'),".format(savePath + mainName, i, savePath))
+
             else:
-                self.gif.save(mainName+'{}.png'.format(i))
+                self.gif.save(mainName + '{}.png'.format(i))
                 f.write("('{}{}','{}'),".format(mainName, i, "'.'"))
         f.write("]")
-        
-            
+
     # loads all the frames in a bidimensional array
     def gifLoader(self, loadPath="/"):
         frame = ''
@@ -63,13 +63,12 @@ class PyGimager:
             for image in os.listdir():
                 if image.endswith(".png"):
                     frame = pygame.image.load(image)
-                    self.frames.append(frame) 
+                    self.frames.append(frame)
         else:
             for image in os.listdir(loadPath):
                 if image.endswith(".png"):
-                    frame = pygame.image.load(loadPath+image)
-                    self.frames.append(frame) 
-       
+                    frame = pygame.image.load(loadPath + image)
+                    self.frames.append(frame)
 
     def gifPlayer(self, screen, position=def_position, wait=500):
         for frame in self.frames:
