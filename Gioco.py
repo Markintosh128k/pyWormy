@@ -27,13 +27,22 @@ PINK = (222, 50, 235)
 # Percorsi gif
 btnMainPathList = ['Img/Buttons/Play.gif', 'Img/Buttons/Options.gif', 'Img/Buttons/Exit.gif']
 saveMainPathList = [('PlayButton', 'Img/Buttons/Play/'), ('OptionsButton', 'Img/Buttons/Options/'), ('ExitButton', 'Img/Buttons/Exit/')]
+# Carico file per l'eseguie
+for gif in btnMainPathList:
+    resource_path(gif)
+
 
 btnOptionsPathList = ['Img/Buttons/Easy.gif', 'Img/Buttons/Hard.gif']
 saveOptionsPathList = [('EasyButton', 'Img/Buttons/Easy/'), ('HardButton', 'Img/Buttons/Hard/')]
+# Carico file per l'eseguie
+for gif in btnOptionsPathList:
+    resource_path(gif)
 
 
 btnGameOverPathlist = ['Img/Buttons/BackToMenu.gif', 'Img/Buttons/Exit.gif']
 saveGameOverPathList = [('BacktoMenuButton', 'Img/Buttons/BackToMenu/'), ('ExitButton', 'Img/Buttons/Exit/')]
+resource_path('Img/Buttons/BackToMenu.gif')
+
 
 # caricamento immagine sfondo menù
 assetMenu_url = resource_path("Img/startMenu.png")
