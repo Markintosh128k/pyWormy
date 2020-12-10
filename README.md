@@ -14,7 +14,7 @@
 # IMMAGINI
 
 # DOWNLOAD
-* [Windows (.exe)](https://mega.nz/file/1hwgyBrD#n1K25QslqUdKGYFktUCsfnrYeCcsMGoiHRbTOPpfhNY)
+* [Windows (.exe)](https://mega.nz/file/9xwThS4b#5Ygx49egLjC0zgM1SChSufeZTto3o5xDl0CzlFMMvfs)
 
 
 
