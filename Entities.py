@@ -1,7 +1,7 @@
-from Control import *
 from PyGimager import resource_path
 import pygame
 import random
+import sys
 
 pygame.init()
 
@@ -205,7 +205,7 @@ class Mela:
 
         # prende l'immagine della mela dalla cartella
         self.melaList = ["Img/Sprites/Sprites3/Mela/C.png", "Img/Sprites/Sprites3/Mela/JS.png", "Img/Sprites/Sprites3/Mela/Ruby.png", "Img/Sprites/Sprites3/Mela/PHP.png",]
-       
+
         # Caricamento dello sprite
         n = random.choice(self.melaList)
         assetMela_url = resource_path(n)
