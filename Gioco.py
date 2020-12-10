@@ -1,7 +1,5 @@
 from Entities import *
 from PyGimager import *
-import pygame
-import sys
 
 # Colori utili
 WHITE = (255, 255, 255)
@@ -22,46 +20,43 @@ END_HEIGHT = 800
 # Grandezza celle
 CELL_SIZE = 20
 
-#BOTTONI
-btnPlay = ['Img/Buttons/Play/PlayButton0.png', 'Img/Buttons/Play/PlayButton1.png']
-btnOptions = ['Img/Buttons/Options/OptionsButton0.png', 'Img/Buttons/Options/OptionsButton1.png']
-btnEasy = ['Img/Buttons/Easy/EasyButton0.png', 'Img/Buttons/Easy/EasyButton1.png']
-btnHard = ['Img/Buttons/Hard/HardButton0.png', 'Img/Buttons/Hard/HardButton1.png']
-btnExit = ['Img/Buttons/Exit/ExitButton0.png', 'Img/Buttons/Exit/ExitButton1.png']
-btnBackMenu = ['Img/Buttons/BackToMenu/BacktoMenuButton0.png', 'Img/Buttons/BackToMenu/BacktoMenuButton0.png']
+# PATH PULSANTI
+path_btnPlay = ['Img/Buttons/Play/PlayButton0.png', 'Img/Buttons/Play/PlayButton1.png']
+path_btnOptions = ['Img/Buttons/Options/OptionsButton0.png', 'Img/Buttons/Options/OptionsButton1.png']
+path_btnEasy = ['Img/Buttons/Easy/EasyButton0.png', 'Img/Buttons/Easy/EasyButton1.png']
+path_btnHard = ['Img/Buttons/Hard/HardButton0.png', 'Img/Buttons/Hard/HardButton1.png']
+path_btnExit = ['Img/Buttons/Exit/ExitButton0.png', 'Img/Buttons/Exit/ExitButton1.png']
+path_btnBackMenu = ['Img/Buttons/BackToMenu/BacktoMenuButton0.png', 'Img/Buttons/BackToMenu/BacktoMenuButton0.png']
 
-for btn in btnPlay:
+for btn in path_btnPlay:
     resource_path(btn)
 
-for btn in btnOptions:
+for btn in path_btnOptions:
     resource_path(btn)
 
-for btn in btnEasy:
+for btn in path_btnEasy:
     resource_path(btn)
 
-for btn in btnHard:
+for btn in path_btnHard:
     resource_path(btn)
 
-for btn in btnExit:
+for btn in path_btnExit:
     resource_path(btn)
 
-for btn in btnBackMenu:
+for btn in path_btnBackMenu:
     resource_path(btn)
 
 
 # SFONDI
-assetMenu_url = resource_path("Img/startMenu.png")
-sfondoMenu = pygame.image.load(assetMenu_url)
+sfondo_menu = pygame.image.load(resource_path('Img/startMenu.png'))
+sfondo_gameOver = pygame.image.load(resource_path("Img/GameOver.png"))
+sfondo_game = pygame.image.load(resource_path('Img/background.png'))
 
 # MUSICA
-assetMenuSound_url = resource_path("Sounds/musica.wav")
-musicaMenu = pygame.mixer.Sound(assetMenuSound_url)
-
-assetHardSound_url = resource_path("Sounds/difficileSottofondo.wav")
-musicaHard = pygame.mixer.Sound(assetHardSound_url)
-
-assetEasySound_url = resource_path("Sounds/facileSottofondo.wav")
-musicaEasy = pygame.mixer.Sound(assetEasySound_url)
+musica_menu = pygame.mixer.Sound(resource_path('Sounds/musica.wav'))
+musica_hardMode = pygame.mixer.Sound(resource_path('Sounds/difficileSottofondo.wav'))
+musica_easyMode = pygame.mixer.Sound(resource_path('Sounds/facileSottofondo.wav'))
+musica_gameOver =  pygame.mixer.Sound(resource_path("Sounds/lose.wav"))
 
 # FONT
 assetFONT_OBJ_url = resource_path('SF_Pixelate.ttf')
@@ -80,119 +75,72 @@ def disegnaGriglia(screen):
     for y in range(START_HEIGHT, END_HEIGHT, CELL_SIZE):
         pygame.draw.line(screen, WHITE, (START_WIDHT, y), (END_WIDTH, y), 1)
 
+# Creazione del menu main
+def mainMenu(screen):
+    action = ''     # azione del pulsante premuto
+
+    # CREAZIONE OGGETTI PULSATNI
+    btnPlay = Button(path_btnPlay, 'play', (WIN_WIDTH/2), (WIN_HEIGHT/2) - 150)
+    btnOptions = Button(path_btnOptions, 'options', (WIN_WIDTH / 2), (WIN_HEIGHT / 2) - 50)
+    btnExit = Button(path_btnExit, 'exit', (WIN_WIDTH / 2), (WIN_HEIGHT / 2) + 50)
+
+    buttonsList = [btnPlay, btnOptions, btnExit]
+
+    # CREAZIONE OGGETTO MAIN MENU
+    mainM = Menu(screen, buttonsList, 375, 120)
+
+    # Variabili di default
+    done = False
+    velocitaMAX = 15
+    musica = musica_easyMode
+
+    while not done:
+        action = mainM.start(sfondo_menu, 100)
+        if action == 'play':
+            game_action = game(velocitaMAX, musica)
+            if game_action == 'exit':
+                done = True
+
+        elif action == 'options':
+            velocitaMAX, musica = options()
+        elif action == 'exit':
+            done = True
+
 # Creazione menu options
 def options():
+    action = ''  # azione del pulsante premuto
+    # CREAZIONE OGGETTI PULSATNI
+    btnEasy= Button(path_btnEasy, 'easy', (WIN_WIDTH / 2), (WIN_HEIGHT / 2) - 150)
+    btnHard = Button(path_btnHard, 'hard', (WIN_WIDTH / 2), (WIN_HEIGHT / 2))
 
-    imgEasy = pygame.image.load(btnEasy[1])
-    rectEasy = imgEasy.get_rect(center=(480, 400))
+    buttonsList = [btnEasy, btnHard]
 
-    imgHard = pygame.image.load(btnHard[1])
-    rectHard = imgHard.get_rect(center=(480, 500))
+    # CREAZIONE OGGETTO MAIN MENU
+    optionMenu = Menu(screen, buttonsList, 375, 120)
 
-    finito = False
-    click = False
-    while not finito:
-        # cattura posizione mouse
-        mouse = pygame.mouse.get_pos()
+    action = optionMenu.start(sfondo_menu, 100)
 
-        # Disegno sullo schermo
-        screen.blit(sfondoMenu, (0, 0))
-        screen.blit(imgEasy, rectEasy)
-        screen.blit(imgHard, rectHard)
+    if action == 'easy':
+        velocitaMAX = 15
+        musica = musica_easyMode
+    elif action == 'hard':
+        velocitaMAX = 40
+        musica = musica_hardMode
 
-        if rectEasy.collidepoint(mouse):
-            gifPlayer(screen, btnEasy, rectEasy, 100)
-            if click:
-                velocitaMAX = 15
-                musica = musicaEasy
-                finito = True
-
-        elif rectHard.collidepoint(mouse):
-                gifPlayer(screen, btnHard, rectHard, 100)
-                if click:
-                    velocitaMAX = 40
-                    musica = musicaHard
-                    finito = True
-
-
-        click = False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                click = True
-
-        pygame.display.update()
 
     return velocitaMAX, musica
 
 # Creazione menu gameover
 def messaggioGameOver(screen, punteggio):
+    # CREAZIONE OGGETTI PULSATNI
+    btnBack = Button(path_btnBackMenu, 'back', (WIN_WIDTH / 2), (WIN_HEIGHT / 2) + 100)
+    btnExit = Button(path_btnExit, 'exit', (WIN_WIDTH / 2), (WIN_HEIGHT / 2) + 200)
+    buttonsList = [btnBack, btnExit]
 
-    # MUSICA
-    assetgameOverSound_url = resource_path("Sounds/lose.wav")
-    gameOverSound = pygame.mixer.Sound(assetgameOverSound_url)
+    # CREAZIONE OGGETTO MAIN MENU
+    gameoverMenu = Menu(screen, buttonsList, 375, 120)
 
-    # SFONDO
-    assetGameOverImg_url = resource_path("Img/GameOver.png")
-    gameOverImg = pygame.image.load(assetGameOverImg_url)
-
-
-    # Caricamento img
-    imgBack = pygame.image.load(btnBackMenu[1])
-    rectBack = imgBack.get_rect(center=(480, 600))
-
-    imgExit = pygame.image.load(btnExit[1])
-    rectExit = imgExit.get_rect(center=(480, 700))
-
-    finito = False
-    click = False
-
-    gameOverSound.play()
-    azione = ''
-    while not finito:
-        # cattura posizione mouse
-        mouse = pygame.mouse.get_pos()
-
-        # Disegno sullo schermo
-        screen.blit(gameOverImg, (0, 0))
-        score(screen, FONT_END, punteggio, 540, 414, YELLOW)
-        screen.blit(imgBack, rectBack)
-        screen.blit(imgExit, rectExit)
-
-        if rectBack.collidepoint(mouse):
-            gifPlayer(screen, btnBackMenu, rectBack, 100)
-            if click:
-                azione = 'mainMenu'
-                finito = True
-
-        elif rectExit.collidepoint(mouse):
-            gifPlayer(screen, btnExit, rectExit, 100)
-            if click:
-                azione = 'exit'
-                finito = True
-
-        click = False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                click = True
-
-        pygame.display.update()
-
-    return azione
-
+    return gameoverMenu.start(sfondo_gameOver, 100, str(punteggio), FONT_END, (540, 414), YELLOW)
 
 # gioco
 def game(velocitaMAX, musica):
@@ -200,36 +148,35 @@ def game(velocitaMAX, musica):
     velocita = 10
     fps = pygame.time.Clock()
 
-    # Oggetti
+    # CREAZIONE OGGETTI VERME E MELA
     verme = Verme(screen, CELL_SIZE, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT)
-    mele = Mela(screen, CELL_SIZE, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT)
+    mela = Mela(screen, CELL_SIZE, START_WIDHT, START_HEIGHT, END_WIDTH, END_HEIGHT)
 
     # Inizializzazione varibili utili
     gameover = False
-    assetSfondo = resource_path("Img/background.png")
-    bg = pygame.image.load(assetSfondo)
-    bg = pygame.transform.scale(bg, (1000, 900))
     punteggio = 0
 
-    mele.spawn()
+    mela.spawn()
     musica.play(-1)
     while not gameover:
-        melaX = mele.getX()
-        melaY = mele.getY()
-        screen.blit(bg, (0, 0))
-        # disegnaGriglia(screen)
-        score(screen, FONT_SCORE, punteggio, 290, 831, PINK)
-        mele.disegna()
+        # Disegna il verme e la mela
+        #disegnaGriglia(screen)
+        screen.blit(sfondo_game, (0, 0))
+        mela.disegna()
         verme.disegna()
+        # Mostra il punteggio attuale
+        score(screen, FONT_SCORE, punteggio, 290, 831, PINK)
 
-        # seleziona i comandi
+        # Muove il serpente, se va fuori campo o si mangia da solo si perde
         gameover = verme.comandi()
-        
-        if verme.mangiaMele(melaX, melaY):
-            mele.spawn()
-            punteggio += 1
-            if velocita <= velocitaMAX:
-                velocita += 1
+
+        # Controllo se il verme mangia la mela
+        if not gameover:
+            if verme.mangiaMele(mela.getX(), mela.getY()):
+                mela.spawn()
+                punteggio += 1
+                if velocita <= velocitaMAX:
+                    velocita += 1
 
         pygame.display.update()
         fps.tick(velocita)
@@ -238,76 +185,16 @@ def game(velocitaMAX, musica):
     return messaggioGameOver(screen, punteggio)
 
 
+
+
 if __name__ == "__main__":
 
-    # Creazione della finestra (screen)
+    # CREAZIONE DELLA FINESTRA DI GIOCO
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     pygame.display.set_caption("pyWormy")
 
-    # Set del modalità default
-    velocitaMAX = 15
-    musica = musicaEasy
+    mainMenu(screen)
 
-    # Creazione menu principlae
-    finito = False
-    click = False
 
-    musicaMenu.play(-1)
 
-    # Caricamento img
-    imgPlay = pygame.image.load(btnPlay[1])
-    rectPlay = imgPlay.get_rect(center=(480, 300))
 
-    imgOpt = pygame.image.load(btnOptions[1])
-    rectOpt = imgPlay.get_rect(center=(480, 400))
-
-    imgExit= pygame.image.load(btnExit[1])
-    rectExit = imgPlay.get_rect(center=(480, 500))
-
-    while not finito:
-        # cattura posizione mouse
-        mouse = pygame.mouse.get_pos()
-
-        # Disegno sullo schermo
-        screen.blit(sfondoMenu, (0, 0))
-        screen.blit(imgPlay, rectPlay)
-        screen.blit(imgOpt, rectOpt)
-        screen.blit(imgExit, rectExit)
-
-        if rectPlay.collidepoint(mouse):
-            gifPlayer(screen, btnPlay, rectPlay, 100)
-            if click:
-                musicaMenu.stop()
-                gameover = False
-                while not gameover:
-                    if game(velocitaMAX, musica) == 'exit':
-                        finito = True
-                    gameover = True
-
-        elif rectOpt.collidepoint(mouse):
-            gifPlayer(screen, btnOptions, rectOpt, 100)
-            if click:
-                velocitaMAX, musica = options()
-
-        elif rectExit.collidepoint(mouse):
-            gifPlayer(screen,btnExit, rectExit, 100)
-            if click:
-                finito = True
-
-        click = False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                click = True
-
-        pygame.display.update()
-
-    musicaMenu.stop()
-    pygame.quit()
-    sys.exit()

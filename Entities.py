@@ -241,4 +241,3 @@ class Mela:
     # Disegna la mela
     def disegna(self):
         self.screen.blit(self.imgLoad, (self.x, self.y))
-
