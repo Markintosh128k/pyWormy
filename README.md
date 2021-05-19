@@ -1,17 +1,9 @@
 # pyWormy
- pyWormy è la nostra copia del classicissimo gioco Snake, esso è stato scritto in Python 3.9 con l'aiuto della libreria Pygame.
+ pyWormy is a class-based snake integration in python.
 
-# Autori
+# Developers
 * Fabrizio Ciotola (@FabrizioCiotola)
 * Gianmarco Davini (@Markintosh128k)
-
-# COMANDI
-* Freccia direzionale SÙ
-* Freccia direzionale GIÙ
-* Freccia direzionale DESTRA
-* Freccia direzionale SINISTRA
-
-# IMMAGINI
 
 # DOWNLOAD
 * [Windows (.exe)](https://mega.nz/file/9xwThS4b#5Ygx49egLjC0zgM1SChSufeZTto3o5xDl0CzlFMMvfs)
@@ -19,11 +11,4 @@
 
 
 
-
-
-
-
-
-
-
-# SVILUPPATO PER IL PON "ROBOTICA EDUCATIVA".
+# DEVELOPED FOR PON "ROBOTICA EDUCATIVA".
