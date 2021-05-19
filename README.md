@@ -5,7 +5,7 @@
 * Fabrizio Ciotola (@FabrizioCiotola)
 * Gianmarco Davini (@Markintosh128k)
 
-# DOWNLOAD
+# Download
 * [Windows (.exe)](https://mega.nz/file/9xwThS4b#5Ygx49egLjC0zgM1SChSufeZTto3o5xDl0CzlFMMvfs)
 
 
